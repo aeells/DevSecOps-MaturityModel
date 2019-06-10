@@ -184,7 +184,7 @@ Culture and Org.:
     samm: SM1-B
 Process:
   #  Data classification:
-  Definition of simple BCDR practices for citical components:
+  Definition of simple BCDR practices for critical components:
     risk: In case of an emergency, like a power outage, DR actions to perform are not clear. This leads to reaction and remediation delays.
     measure: By understanding and documenting a business continuity and disaster recovery (BCDR) plan, the overall availabilitiy of systems and applications is increased. Success factors like responsibilties, Service Level Agreemenmts, Recovery Point Objectives, Recovery Time Objectives or Failover must be fully documentate and understood.
     difficultyOfImplementation:

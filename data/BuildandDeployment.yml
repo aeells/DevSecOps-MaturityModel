@@ -1,35 +1,33 @@
 ---
 Build:
-  Building and testing of artefacts in virtual environments:
-    risk: While building and testing artefacts, third party systems, application frameworks
-      and 3rd party libraries are used. These might be malicious as a result of vulnerable
-      libraries or because they are altered during the delivery phase.
-    measure: Each step during within the build and testing phase is performed in a separate virtual
-      environments, which is destroyed afterward.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 2
-      resources: 2
-    usefulness: 2
-    level: 4
-    implementation: Docker
-    samm2: i-secure-build|A|2
-  Defined build process:
-    risk: Performing builds without a defined process is error prone.
-      For example, as a result of incorect security related configuration.
-    measure: A well defined build process lowers the possibility of errors during the build
-      process.
+  Defined security coding guidelines:
+    risk: Java comes with its own unique set of security challenges. While the Java security architecture [1] can in many cases help to protect users and systems from hostile or misbehaving code, it cannot defend against implementation bugs that occur in trusted code. Such bugs can inadvertently open the very holes that the security architecture was designed to contain. In severe cases local programs may be executed or Java security disabled. These bugs can potentially be used to steal confidential data from the machine and intranet, misuse system resources, prevent useful operation of the machine, assist further attacks, and many other malicious activities.
+    measure: To minimize the likelihood of security vulnerabilities caused by programmer error, Java developers should adhere to recommended coding guidelines.
     difficultyOfImplementation:
       knowledge: 2
       time: 3
       resources: 2
     usefulness: 4
     level: 1
-    implementation: "Jenkins, Docker"
+    implementation:
+      - <a href='https://www.oracle.com/technetwork/java/seccodeguide-139067.html'>Secure Coding Guidelines for Java SE</a>
     samm2: i-secure-build|A|1
-  Regular tests:
-    risk: After pushing source code to the version control system, any elay in receiving feedback on defects makes them harder for the developer to remediate. 
-    measure: On each push and/or at given intervals automatic security tests are performed.
+  Defined build process:
+    risk: Performing builds without a defined process is error prone.
+      For example, as a result of incorect security related configuration.
+    measure: A source-controlled build process lowers the possibility of errors during the build
+      process. No master commits, branch Pull Requests with Approvers. 3rd party dependencies versioned, full provenance, licence management etc.
+    difficultyOfImplementation:
+      knowledge: 2
+      time: 3
+      resources: 2
+    usefulness: 4
+    level: 1
+    implementation: "Git"
+    samm2: i-secure-build|A|1
+  Regular security tests:
+    risk: After code review and merging Pull Request branches to the source control system, any delay in receiving feedback on defects makes them harder for the developer to remediate.
+    measure: On each merge and/or at given intervals automatic security tests are performed.
     difficultyOfImplementation:
       knowledge: 1
       time: 1
@@ -47,7 +45,7 @@ Build:
       resources: 2
     usefulness: 3
     level: 3
-    implementation: 
+    implementation:
     dependsOn:
     - Defined build process
     samm: OA3-B
@@ -62,14 +60,51 @@ Build:
       resources: 2
     usefulness: 4
     level: 3
-    implementation: 
+    implementation:
       - <a href="https://docs.docker.com/notary/getting_started/">Docker Content Trust</a>
       - <a href="https://in-toto.github.io/">in-toto</a>
     dependsOn:
     - Defined build process
     samm: OA3-B
     samm2: i-secure-build|A|1
+  Build and test of artefacts in virtual environments:
+    risk: While building and testing applications, third party systems, application frameworks
+      and 3rd party libraries are used. These might be malicious as a result of vulnerable
+      libraries or because they are altered during the delivery phase.
+    measure: Each step during the build and test phase is performed in a separate virtual environment, which is destroyed afterward.
+    difficultyOfImplementation:
+      knowledge: 2
+      time: 2
+      resources: 2
+    usefulness: 2
+    level: 4
+    implementation: Docker
+    samm2: i-secure-build|A|2
 Deployment:
+  Defined deployment process:
+    risk: Deployments without a defined process are error prone thus allowing old or untested artefact to be deployed.
+    measure: A defined deployment process significantly lowers the likelihood of errors during the deployment phase.
+    difficultyOfImplementation:
+      knowledge: 2
+      time: 2
+      resources: 1
+    usefulness: 4
+    level: 1
+    implementation: Jenkins, Docker
+    samm2: i-secure-deployment|A|1
+  Inventory of running artifacts:
+    risk: In case a vulnerability of severity high or critical exists, it needs to be known where an artifacts with that vulnerability is deployed with which dependencies.
+    Measure: A documented inventory or a possibility to gather the needed information (e.g. the documentation of which script needs to be run by whoom) must be in place.
+    implementation: Kubernetes Admission Controller can whitelist registries and/or whitelist a signing key.
+    dependsOn:
+      - Defined deployment process
+    difficultyOfImplementation:
+      knowledge: 1
+      time: 1
+      resources: 1
+    usefulness: 3
+    level: 1
+    samm2: o-incident-management|TODO
   Backup before deployment:
     risk: If errors are experienced during the deployment process you want to deploy
       an old release. However, due to changes in the database this is often unfeasible.
@@ -86,33 +121,7 @@ Deployment:
     - Defined deployment process
     samm: OE2-A
     samm2: TODO
-  Blue/Green Deployment:
-    risk: A new artefact version can have unknown defects.
-    measure: By having multiple production environments, a deployment can be performent
-      on the first environment to spot possible defects before it is deployment in the production environment(s)
-    difficultyOfImplementation:
-      knowledge: 1
-      time: 2
-      resources: 1
-    usefulness: 2
-    level: 4
-    implementation: <a href='https://martinfowler.com/bliki/BlueGreenDeployment.html'>Blue/Green
-      Deployments</a>
-    dependsOn:
-    - Smoke Test
-    samm2: TODO
-  Defined deployment process:
-    risk: Deployments without a defined process are error prone thus allowing old or untested artefact to be deployed.
-    measure: A defined deployment process significantly lowers the likelihood of errors during the deployment phase.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 2
-      resources: 1
-    usefulness: 4
-    level: 1
-    implementation: Jenkins, Docker
-    samm2: i-secure-deployment|A|1
-  Environment depending configuration parameters:
+  Configuration externalised from environments:
     risk: Attackers who compromise source code can see confidential access information
       like database credentials.
     measure: Configuration parameters are set for each environment not in the source
@@ -126,6 +135,18 @@ Deployment:
     implementation: ""
     samm: SA2-A
     samm2: i-secure-deployment|B|1
+  Usage of trusted images:
+    risk: Developers or operations might start random images in the production cluster which have malicous code or known vulnerabilities.
+    Measure: Whitelist signed artificats/images or whitelist a trusted (internal) registry.
+    implementation: Kubernetes Admission Controller can whitelist registries and/or whitelist a signing key.
+    dependsOn: Signing of artefacts
+    difficultyOfImplementation:
+      knowledge: 1
+      time: 1
+      resources: 1
+    usefulness: 3
+    level: 2
+    samm2: i-secure-deployment|A|2
   Handover of confidential parameters:
     risk: Attackers who compromise a system can see confidential access information
       like database credentials. Parameters are often used to set credentials, for
@@ -142,7 +163,7 @@ Deployment:
     level: 3
     implementation: ""
     dependsOn:
-    - Environment depending configuration parameters
+    - Configuration externalised from environments
     samm: "SA2-A"
     samm2: i-secure-deployment|B|2 TODO might be 1
   Rolling update on deployment:
@@ -191,29 +212,19 @@ Deployment:
     - Same artefact for environments
     samm: EG1-B
     samm2: TODO
-  Usage of trusted images:
-    risk: Developers or operations might start random images in the production cluster which have malicous code or known vulnerabilities.
-    Measure: Whitelist signed artificats/images or whitelist a trusted (internal) registry.
-    implementation: Kubernetes Admission Controller can whitelist registries and/or whitelist a signing key.
-    dependsOn: Signing of artefacts
+  Blue/Green Deployment:
+    risk: A new artefact version can have unknown defects.
+    measure: By having multiple production environments, a deployment can be performent
+      on the first environment to spot possible defects before it is deployment in the production environment(s)
     difficultyOfImplementation:
       knowledge: 1
-      time: 1
+      time: 2
       resources: 1
-    usefulness: 3
-    level: 2
-    samm2: i-secure-deployment|A|2
-  Inventory of running artifacts:
-    risk: In case a vulnerability of severity high or critical exists, it needs to be known where an artifacts with that vulnerability is deployed with which dependencies.
-    Measure: A documented inventory or a possibility to gather the needed information (e.g. the documentation of which script needs to be run by whoom) must be in place.
-    implementation: Kubernetes Admission Controller can whitelist registries and/or whitelist a signing key.
+    usefulness: 2
+    level: 4
+    implementation: <a href='https://martinfowler.com/bliki/BlueGreenDeployment.html'>Blue/Green
+      Deployments</a>
     dependsOn:
-    - Defined deployment process
-    difficultyOfImplementation:
-      knowledge: 1
-      time: 1
-      resources: 1
-    usefulness: 3
-    level: 1
-    samm2: o-incident-management|TODO
+      - Smoke Test
+    samm2: TODO
 ...

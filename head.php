@@ -63,10 +63,10 @@ function getTableHeader() {
 	$headers = array (
 			gettext ( "Dimension" ),
 			gettext ( "Sub-Dimension" ),
-			gettext ( "Level 1: Basic understanding of security practices" ),
-			gettext ( "Level 2: Understanding of security practices" ),
-			gettext ( "Level 3: High understanding of security practices" ),
-			gettext ( "Level 4: Advanced understanding of security practives at scale" ) 
+			gettext ( "Basic understanding" ),
+			gettext ( "Evolving understanding" ),
+			gettext ( "High understanding" ),
+			gettext ( "Advanced understanding at scale" )
 	);
 	$headerContent = "<thead  class=\"thead-default\"><tr>";
 	foreach ( $headers as $header ) {
@@ -97,12 +97,12 @@ function getTable($dimensions) {
 			$tableContent .= "<td>";
 			$tableContent .= "$dimension";
 			$tableContent .= "</td>";
-			
+
 			$tableContent .= "<td>";
 			$tableContent .= "$subdimension";
 			$tableContent .= "</td>";
-			
-			for($i = 1; $i <= 4; $i ++) {
+
+			for($i = 1; $i <= 5; $i ++) {
 				$tableContent .= "<td><ul>";
 				foreach ( $element as $elementName => $content ) {
 					$content = getContentForLevelFromSubdimensions ( $i, $content, $elementName );
@@ -117,7 +117,7 @@ function getTable($dimensions) {
 				}
 				$tableContent .= "</ul></td>";
 			}
-			
+
 			$tableContent .= "</tr>";
 		}
 	}

@@ -1,5 +1,45 @@
 ---
-Infrastructure Hardening:
+Configuration:
+  Externalised secrets management store:
+    risk: Secrets are embedded in code or left unsecured on disk. Also implies no consistent way to manage, expire etc.
+    measure: Secrets are secure, encrypted and managed (expiry policies etc).
+    difficultyOfImplementation:
+      knowledge: 4
+      time: 3
+      resources: 1
+    usefulness: 3
+    level: 2
+    implementation: 'HashiCorp Vault, CyberArk'
+    dependsOn:
+      - Infrastructure as Code
+    samm2: o-environment-management|A|1
+  Key management solution:
+    risk: Key management refers to management of cryptographic keys in a cryptosystem. Compliance involves the oversight, assurance and capability of being able to demonstrate that keys are securely managed.
+    measure: The generation, exchange, storage, use, destruction and replacement of keys.
+    difficultyOfImplementation:
+      knowledge: 4
+      time: 3
+      resources: 2
+    usefulness: 4
+    level: 3
+    implementation: 'HashiCorp Vault, AWS KMS'
+    dependsOn:
+      - Infrastructure as Code
+    samm2: o-environment-management|A|1
+  Certificate management solution:
+    risk: Centralizing PKI management is the only effective way to ensure the security of a given system.
+    measure: The process of managing digital security certificates. This includes processes such as creation, storage, dissemination, suspension and revocation of certificates.
+    difficultyOfImplementation:
+      knowledge: 4
+      time: 3
+      resources: 2
+    usefulness: 4
+    level: 3
+    implementation: 'Netflix Lemur, AWS ACM'
+    dependsOn:
+      - Infrastructure as Code
+    samm2: o-environment-management|A|1
+Hardening:
   The cluster is hardened:
     risk: Using default configurations for a cluster enviroment leads to potential risks.
     measure: Harden cluster enviroments according to best practices.
@@ -9,7 +49,7 @@ Infrastructure Hardening:
       resources: 2
     usefulness: 4
     level: 2
-    implementation: 
+    implementation:
       - <a href='https://www.cisecurity.org/cis-benchmarks/'>CIS Kubernetes Bench for Security</a>
       - <a href='https://www.cisecurity.org/cis-benchmarks/'>CIS Docker Bench for Security</a>
       - "For example for Containers: Deny running containers as root, deny using advanced privileges, deny mounting of the hole filesystem, ..."
@@ -50,7 +90,7 @@ Infrastructure Hardening:
     usefulness: 5
     level: 1
     dependsOn: []
-    implementation: 
+    implementation:
       - istio
       - bridges
       - firewalls
@@ -191,14 +231,13 @@ Infrastructure Hardening:
       resources: 1
     usefulness: 3
     level: 2
-    implementation: 'For applications: Check default encoding, managing secrets, crypto,
-      authentication'
+    implementation: 'For applications: Check default encoding, managing secrets, crypto, authentication'
     dependsOn:
     - Defined build process
     samm2: o-environment-management|A|1
   Usage of test and production environments:
-    risk: Security tests are not running reculary because test environments are missing
-    measure: A production and a production like envirnoment is used
+    risk: Security tests are not running regulary because test environments are missing
+    measure: A production and a production like environment is used
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -222,7 +261,7 @@ Infrastructure Hardening:
     - Defined deployment process
     samm2: o-environment-management|A|1
   Virtual environments are limited:
-    risk: Denail of service (intenenally by an attacker or uninteninally by a bug)
+    risk: Denial of service (intenenally by an attacker or uninteninally by a bug)
       on one service effects other services
     measure: All virtual envirnoments are using resource limits on hard disks, memory
       and CPU
