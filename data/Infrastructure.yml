@@ -22,14 +22,14 @@ Configuration:
       resources: 1
     usefulness: 3
     level: 2
-    implementation: 'HashiCorp Vault, CyberArk'
+    implementation: HashiCorp Vault, CyberArk
     dependsOn:
       - Infrastructure as Code
     samm2: o-environment-management|A|1
 
   Key management solution:
     risk: Key management refers to management of cryptographic keys in a cryptosystem. Compliance involves the oversight, assurance and capability of being able to demonstrate
-    that keys are securely managed.
+      that keys are securely managed.
     measure: The generation, exchange, storage, use, destruction and replacement of keys.
     difficultyOfImplementation:
       knowledge: 4
@@ -37,7 +37,7 @@ Configuration:
       resources: 2
     usefulness: 4
     level: 3
-    implementation: 'HashiCorp Vault, AWS KMS'
+    implementation: HashiCorp Vault, AWS KMS
     dependsOn:
       - Infrastructure as Code
     samm2: o-environment-management|A|1
@@ -51,7 +51,7 @@ Configuration:
       resources: 2
     usefulness: 4
     level: 3
-    implementation: 'Netflix Lemur, AWS ACM'
+    implementation: Netflix Lemur, AWS ACM
     dependsOn:
       - Infrastructure as Code
     samm2: o-environment-management|A|1
@@ -114,10 +114,10 @@ Hardening:
     usefulness: 4
     level: 2
     implementation: For example for containers deny running as root, deny using advanced privileges, deny mounting the entire filesystem etc.
-      - <a href='https://www.cisecurity.org/cis-benchmarks/'>CIS Kubernetes Bench for Security</a>
-      - <a href='https://www.cisecurity.org/cis-benchmarks/'>CIS Docker Bench for Security</a>
+      - <a href="https://www.cisecurity.org/cis-benchmarks/">CIS Kubernetes Bench for Security</a>
+      - <a href="https://www.cisecurity.org/cis-benchmarks/">CIS Docker Bench for Security</a>
       For JBoss hardening reference see
-      - <a href='https://docs.jboss.org/author/display/AS72/Hardening+Guidelines'>JBoss Hardening</a>
+      - <a href="https://docs.jboss.org/author/display/AS72/Hardening+Guidelines">JBoss Hardening</a>
     dependsOn:
       - Defined build process
     samm2: o-environment-management|A|1
@@ -173,7 +173,7 @@ Hardening:
   Immutable Infrastructure:
     risk: Traditionally, security teams have been accustomed to investigating incidents and falling back to previous code releases if they detect serious issues.
     measure: For IT Ops teams, the chief advantage of immutable infrastructure is that it enables clean, predictable updates. With immutable infrastructure, you can also test the
-    updated version of your resource before it goes live, which provides a high level of confidence that nothing will go awry.
+      updated version of your resource before it goes live, which provides a high level of confidence that nothing will go awry.
     difficultyOfImplementation:
       knowledge: 2
       time: 2
@@ -250,7 +250,7 @@ Hardening:
     usefulness: 3
     level: 4
     implementation:
-      - <a href='https://en.wikipedia.org/wiki/Chaos_engineering'>Chaos engineering</a>
-      - <a href='https://medium.com/netflix-techblog/the-netflix-simian-army-16e57fbab116'>The Netflix Simian Army</a>
+      - <a href="https://en.wikipedia.org/wiki/Chaos_engineering">Chaos engineering</a>
+      - <a href="https://medium.com/netflix-techblog/the-netflix-simian-army-16e57fbab116">The Netflix Simian Army</a>
     samm2: o-environment-management|A|1
 ...

@@ -51,7 +51,7 @@ Build:
     level: 3
     implementation:
     dependsOn:
-    - Defined build process
+      - Defined build process
     samm: OA3-B
     samm2: i-secure-build|A|2
 
@@ -69,7 +69,7 @@ Build:
       - <a href="https://docs.docker.com/notary/getting_started/">Docker Content Trust</a>
       - <a href="https://in-toto.github.io/">in-toto</a>
     dependsOn:
-    - Defined build process
+      - Defined build process
     samm: OA3-B
     samm2: i-secure-build|A|1
 
@@ -128,7 +128,7 @@ Deployment:
     implementation: A complete database dabackup might be performed. For large and complex
       environments, a Point in Time Recovery for databases should be implemented.
     dependsOn:
-    - Defined deployment process
+      - Defined deployment process
     samm: OE2-A
     samm2: TODO
 
@@ -144,7 +144,7 @@ Deployment:
     level: 2
     implementation: A database release strategy should be implemented.
     dependsOn:
-    - Defined deployment process
+      - Defined deployment process
     samm: OE2-A
     samm2: TODO
 
@@ -185,7 +185,7 @@ Deployment:
     level: 3
     implementation: Docker, Webserver, rolling update
     dependsOn:
-    - Defined deployment process
+      - Defined deployment process
     samm2: i-secure-deployment|A|1
 
   Build only once:
@@ -199,7 +199,7 @@ Deployment:
     level: 3
     implementation: Docker
     dependsOn:
-    - Defined build process
+      - Defined build process
     samm: OE2-A
     samm2: i-secure-deployment|A|2
 
@@ -214,7 +214,7 @@ Deployment:
     level: 3
     implementation: Docker
     dependsOn:
-    - Build only once
+      - Build only once
     samm: EG1-B
     samm2: TODO
 
