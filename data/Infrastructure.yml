@@ -58,9 +58,9 @@ Configuration:
 
 Hardening:
 
-  Simple access control for systems:
-    risk: Attackers a gaining access to interal systems and application interfaces
-    measure: All internal systems are using simple authentication
+  Role-based access controls:
+    risk: Attackers gaining access to interal systems and application interfaces. Authenticated users able to modify unauthorised information such as deployment configuration.
+    measure: All internal systems are using centralised authentication and role-based access.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -69,14 +69,14 @@ Hardening:
     level: 1
     dependsOn:
       - Defined deployment process
-    implementation: HTTP-Basic Authentication, TLS, VPN
+    implementation: HTTP-Basic Authentication, TLS, VPN, AD
     samm: EH1-B
     samm2: o-environment-management|A|1
 
-  Segmentated networks for virtual environments:
+  Segregated networks for virtual environments:
     risk: Virtual environments in default settings are able to access other virtual
       environments on the network stack. By using virtual machines, it is often possible
-      to connect to other virtual machines. By using docker, one bridge is used by
+      to connect to other virtual machines. Using docker for example, one bridge is used by
       default so that all containers on one host can communicate with each other.
     measure: The communication between virtual environments is regulated.
     difficultyOfImplementation:
@@ -85,7 +85,6 @@ Hardening:
       resources: 3
     usefulness: 5
     level: 1
-    dependsOn: []
     implementation:
       - istio
       - bridges
@@ -93,8 +92,8 @@ Hardening:
     samm2: o-environment-management|A|1
 
   Usage of test and production environments:
-    risk: Security tests are not running regulary because test environments are missing
-    measure: A production and a production like environment is used
+    risk: Security tests are not running regulary because test environments are missing.
+    measure: A production and a production like environments are used for security testing and are always available.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -105,24 +104,27 @@ Hardening:
       - Defined deployment process
     samm2: o-environment-management|A|1
 
-  The cluster is hardened:
-    risk: Using default configurations for a cluster enviroment leads to potential risks.
-    measure: Harden cluster enviroments according to best practices.
+  Hardening approach:
+    risk: Using default configurations for many systems eg. JBoss out of the box or a clustered Kube enviroment leads to potential risks.
+    measure: Harden systems (OS level and application services) according to best practices.
     difficultyOfImplementation:
       knowledge: 4
       time: 3
       resources: 2
     usefulness: 4
     level: 2
-    implementation: For example for Containers, deny running as root, deny using advanced privileges, deny mounting the entire filesystem etc.
+    implementation: For example for containers deny running as root, deny using advanced privileges, deny mounting the entire filesystem etc.
       - <a href='https://www.cisecurity.org/cis-benchmarks/'>CIS Kubernetes Bench for Security</a>
       - <a href='https://www.cisecurity.org/cis-benchmarks/'>CIS Docker Bench for Security</a>
+      For JBoss hardening reference see
+      - <a href='https://docs.jboss.org/author/display/AS72/Hardening+Guidelines'>JBoss Hardening</a>
+    dependsOn:
+      - Defined build process
     samm2: o-environment-management|A|1
 
-  Applications are running in virtualized environments:
-    risk: Through a vulnerability in one service on a server, the attacker gains access
-      to other services.
-    measure: Application are running in virtualized envirnoments
+  Run applications in separate virtualized environments:
+    risk: Through a vulnerability in one service on a server, the attacker gains access to other services.
+    measure: Run applications in separate virtualized environments.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -131,10 +133,9 @@ Hardening:
     level: 2
     samm2: o-environment-management|A|1
 
-  Checking the sources of used libraries:
-    risk: Application and system libraries can have implementation flaws or deployment
-      flaws.
-    measure: Each libraries source is checked to have a trusted source.
+  3rd party library provenance:
+    risk: Application and system libraries can have implementation flaws or deployment flaws.
+    measure: Each library is checked to have a trusted source.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -144,41 +145,9 @@ Hardening:
     samm: SA1-A
     samm2: o-environment-management|A|1
 
-  Usage of security by default for components:
-    risk: Components (images, libraries, applications) are not hardened.
-    measure: Hardening of components is important, specially for image on which other
-      teams base on. Hardening should be performed on the operation system and on
-      the services inside (e.g. Nginx or a Java-Application).
-    difficultyOfImplementation:
-      knowledge: 4
-      time: 3
-      resources: 1
-    usefulness: 3
-    level: 2
-    implementation: 'For applications: Check default encoding, managing secrets, crypto, authentication'
-    dependsOn:
-      - Defined build process
-    samm2: o-environment-management|A|1
-
-  Virtual environments are limited:
-    risk: Denial of service (intenenally by an attacker or uninteninally by a bug)
-      on one service effects other services
-    measure: All virtual envirnoments are using resource limits on hard disks, memory
-      and CPU
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 2
-      resources: 3
-    usefulness: 3
-    level: 2
-    dependsOn:
-      - Applications are running in virtualized environments
-    samm2: o-environment-management|A|1
-
-  Versioning:
-    risk: Changes to production systems can not be undone.
-    measure: Versioning of artifacts related to production environments. For example
-      Jenkins configuration, docker images, system provisioning code.
+  All production system changes versioned:
+    risk: Changes to production systems can not be reverted in the event of errors or failure.
+    measure: Versioning of artifacts related to all aspects of the production system and environment. For example Jenkins configuration, docker images, system provisioning code etc.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -190,11 +159,8 @@ Hardening:
     samm2: o-environment-management|A|1
 
   Infrastructure as Code:
-    risk: No tracking of changes in systems might lead to errors in the configuration.
-      In additions, it might lead to unauthorized changes. An examples is jenkins.
-    measure: Systems are setup by code. A full enviorement can be provisioned. In
-      addition, software like Jenkins 2 can be setup and configured in in code too.
-      The code should be stored in a version control system.
+    risk: No tracking of changes in systems lead to errors in the configuration and to unauthorized changes.
+    measure: Systems are codified and automatically provisioned. This is known as Infrastructure as Code or IaC. The code should be stored in a version control system.
     difficultyOfImplementation:
       knowledge: 3
       time: 5
@@ -205,8 +171,9 @@ Hardening:
     samm2: o-environment-management|A|1
 
   Immutable Infrastructure:
-    risk: The availability of IT systems might be disturbed due to components failures
-    measure: Redundancies in the IT systems
+    risk: Traditionally, security teams have been accustomed to investigating incidents and falling back to previous code releases if they detect serious issues.
+    measure: For IT Ops teams, the chief advantage of immutable infrastructure is that it enables clean, predictable updates. With immutable infrastructure, you can also test the
+    updated version of your resource before it goes live, which provides a high level of confidence that nothing will go awry.
     difficultyOfImplementation:
       knowledge: 2
       time: 2
@@ -215,29 +182,13 @@ Hardening:
     level: 3
     dependsOn:
       - Infrastructure as Code
-    implementation: Remove direct access to infrastructure
+    implementation: Remove direct SSH access to infrastructure
+      - <a href='https://www.infosecurity-magazine.com/opinions/mmutable-infrastructure-modern/'>How Immutable Infrastructure Changes the Modern Security Mindset</a>
     samm2: o-environment-management|A|1
 
-  Role based authentication and authorization:
-    risk: Everyone is able to get unauthorized access to information on systems or
-      to modify information unauthorized on systems.
-    measure: The usage of a (role based) access control helps to restrict system access
-      to authorized users.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 3
-      resources: 1
-    usefulness: 3
-    level: 3
-    implementation: Verzeichnisdienst, Plugins
-    dependsOn:
-      - Defined deployment process
-      - Defined build process
-    samm2: o-environment-management|A|1
-
-  Two Factor Authentication:
-    risk: One factor authentication is simple to bruteforce
-    measure: Two factor authentication for all privileged accounts on systems and applications
+  Two Factor Authentication on public-facing systems:
+    risk: One factor authentication is relatively simple to bruteforce.
+    measure: Two factor authentication for all privileged accounts on public-facing systems and applications.
     difficultyOfImplementation:
       knowledge: 3
       time: 2
@@ -247,9 +198,9 @@ Hardening:
     implementation: Smartcard, YubiKey, SMS
     samm2: TODO
 
-  Limitation of system calls in virtual environments:
-    risk: System calls in virtual environments like docker can lead to privilege escalation.
-    measure: System calls in virtual environments like docker are audited and limited.
+  Limit system calls in virtual environments:
+    risk: System calls in virtual environments can lead to privilege escalation.
+    measure: System calls in virtual environments are limited and subject to audit.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -263,8 +214,7 @@ Hardening:
 
   Microservices architecture:
     risk: Monolithic applications are hard to test.
-    measure: A microservice-architecture helps to have small components, which are
-      easy to test.
+    measure: A microservices architecture helps to have small components, which are easier to test.
     difficultyOfImplementation:
       knowledge: 4
       time: 5
@@ -275,7 +225,7 @@ Hardening:
     samm2: o-environment-management|A|1
 
   Dev-Prod parity:
-    risk: When errors occur in production, developers need to be able to recreate this in a local production-like development environment in order to test and fix with assurance.
+    risk: When errors occur in production, developers need to be able to recreate these in a local production-like development environment in order to test and fix with assurance.
     measure: Usage of infrastructure as code helps to create a production-like environment.
       In addition, it should be possible to create production-like test data. Personal information should be anonymised to comply with data protection laws.
     difficultyOfImplementation:
@@ -290,17 +240,17 @@ Hardening:
     samm: SA1
     samm2: o-environment-management|A|1
 
-  Usage of a chaos monkey:
-    risk: Due to manuel changes on a system, they are not replaceable anymore. In
-      case of a crash it might happen that a planned redudant system is unavailable.
-      In addation, it is hard to replay manual changes.
-    measure: A randomized peridically shutdown of systems makes sure, that nobody
-      will perform manuall changes to a system.
+  Chaos Engineering:
+    risk: When immutable infrastructure is not enforced and tested regularly the paradigm shift collapses. Reversion to manually provisioned infrastructure and systems occurs.
+    measure: A random, periodic termination of systems ensures failover and incentivizes engineers to build resilient services in the case of Chaos Monkey, for instance.
     difficultyOfImplementation:
       knowledge: 3
       time: 5
       resources: 5
     usefulness: 3
     level: 4
+    implementation:
+      - <a href='https://en.wikipedia.org/wiki/Chaos_engineering'>Chaos engineering</a>
+      - <a href='https://medium.com/netflix-techblog/the-netflix-simian-army-16e57fbab116'>The Netflix Simian Army</a>
     samm2: o-environment-management|A|1
 ...
