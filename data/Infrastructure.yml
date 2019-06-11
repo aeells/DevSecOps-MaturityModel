@@ -3,17 +3,17 @@ Configuration:
 
   Encrypted communications:
     risk: A cryptographic protocol is designed to provide communications security over a network.
-    measure: All communication between the estate should be via TLS.
+    measure: All communication between components in the system estate should be via TLS.
     difficultyOfImplementation:
       knowledge: 1
       time: 3
       resources: 1
     usefulness: 4
     level: 1
-    implementation: 'TLS'
+    implementation: TLS
     samm2: o-environment-management|A|1
 
-  Externalised secrets management store:
+  External secrets management store:
     risk: Secrets are embedded in code or left unsecured on disk. Also implies no consistent way to manage, expire etc.
     measure: Secrets are secure, encrypted and managed (expiry policies etc).
     difficultyOfImplementation:
@@ -28,7 +28,8 @@ Configuration:
     samm2: o-environment-management|A|1
 
   Key management solution:
-    risk: Key management refers to management of cryptographic keys in a cryptosystem. Compliance involves the oversight, assurance and capability of being able to demonstrate that keys are securely managed.
+    risk: Key management refers to management of cryptographic keys in a cryptosystem. Compliance involves the oversight, assurance and capability of being able to demonstrate
+    that keys are securely managed.
     measure: The generation, exchange, storage, use, destruction and replacement of keys.
     difficultyOfImplementation:
       knowledge: 4
@@ -57,6 +58,53 @@ Configuration:
 
 Hardening:
 
+  Simple access control for systems:
+    risk: Attackers a gaining access to interal systems and application interfaces
+    measure: All internal systems are using simple authentication
+    difficultyOfImplementation:
+      knowledge: 3
+      time: 3
+      resources: 3
+    usefulness: 5
+    level: 1
+    dependsOn:
+      - Defined deployment process
+    implementation: HTTP-Basic Authentication, TLS, VPN
+    samm: EH1-B
+    samm2: o-environment-management|A|1
+
+  Segmentated networks for virtual environments:
+    risk: Virtual environments in default settings are able to access other virtual
+      environments on the network stack. By using virtual machines, it is often possible
+      to connect to other virtual machines. By using docker, one bridge is used by
+      default so that all containers on one host can communicate with each other.
+    measure: The communication between virtual environments is regulated.
+    difficultyOfImplementation:
+      knowledge: 3
+      time: 3
+      resources: 3
+    usefulness: 5
+    level: 1
+    dependsOn: []
+    implementation:
+      - istio
+      - bridges
+      - firewalls
+    samm2: o-environment-management|A|1
+
+  Usage of test and production environments:
+    risk: Security tests are not running regulary because test environments are missing
+    measure: A production and a production like environment is used
+    difficultyOfImplementation:
+      knowledge: 3
+      time: 3
+      resources: 5
+    usefulness: 4
+    level: 1
+    dependsOn:
+      - Defined deployment process
+    samm2: o-environment-management|A|1
+
   The cluster is hardened:
     risk: Using default configurations for a cluster enviroment leads to potential risks.
     measure: Harden cluster enviroments according to best practices.
@@ -66,10 +114,9 @@ Hardening:
       resources: 2
     usefulness: 4
     level: 2
-    implementation:
+    implementation: For example for Containers, deny running as root, deny using advanced privileges, deny mounting the entire filesystem etc.
       - <a href='https://www.cisecurity.org/cis-benchmarks/'>CIS Kubernetes Bench for Security</a>
       - <a href='https://www.cisecurity.org/cis-benchmarks/'>CIS Docker Bench for Security</a>
-      - "For example for Containers: Deny running containers as root, deny using advanced privileges, deny mounting of the hole filesystem, ..."
     samm2: o-environment-management|A|1
 
   Applications are running in virtualized environments:
@@ -97,23 +144,49 @@ Hardening:
     samm: SA1-A
     samm2: o-environment-management|A|1
 
-  Segmentated networks for virtual environments:
-    risk: Virtual environments in default settings are able to access other virtual
-      environments on the network stack. By using virtual machines, it is often possible
-      to connect to other virtual machines. By using docker, one bridge is used by
-      default so that all containers on one host can communicate with each other.
-    measure: The communication between virtual environments is regulated.
+  Usage of security by default for components:
+    risk: Components (images, libraries, applications) are not hardened.
+    measure: Hardening of components is important, specially for image on which other
+      teams base on. Hardening should be performed on the operation system and on
+      the services inside (e.g. Nginx or a Java-Application).
+    difficultyOfImplementation:
+      knowledge: 4
+      time: 3
+      resources: 1
+    usefulness: 3
+    level: 2
+    implementation: 'For applications: Check default encoding, managing secrets, crypto, authentication'
+    dependsOn:
+      - Defined build process
+    samm2: o-environment-management|A|1
+
+  Virtual environments are limited:
+    risk: Denial of service (intenenally by an attacker or uninteninally by a bug)
+      on one service effects other services
+    measure: All virtual envirnoments are using resource limits on hard disks, memory
+      and CPU
+    difficultyOfImplementation:
+      knowledge: 2
+      time: 2
+      resources: 3
+    usefulness: 3
+    level: 2
+    dependsOn:
+      - Applications are running in virtualized environments
+    samm2: o-environment-management|A|1
+
+  Versioning:
+    risk: Changes to production systems can not be undone.
+    measure: Versioning of artifacts related to production environments. For example
+      Jenkins configuration, docker images, system provisioning code.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
       resources: 3
     usefulness: 5
-    level: 1
-    dependsOn: []
-    implementation:
-      - istio
-      - bridges
-      - firewalls
+    level: 3
+    dependsOn:
+      - Defined deployment process
     samm2: o-environment-management|A|1
 
   Infrastructure as Code:
@@ -131,20 +204,6 @@ Hardening:
     implementation: GitOps, Ansible, Chef, Puppet, Jenkinsfile
     samm2: o-environment-management|A|1
 
-  Limitation of system calls in virtual environments:
-    risk: System calls in virtual environments like docker can lead to privilege escalation.
-    measure: System calls in virtual environments like docker are audited and limited.
-    difficultyOfImplementation:
-      knowledge: 3
-      time: 3
-      resources: 3
-    usefulness: 5
-    level: 4
-    dependsOn:
-    - Applications are running in virtualized environments
-    implementation: seccomp, strace
-    samm2: o-environment-management|A|1
-
   Immutable Infrastructure:
     risk: The availability of IT systems might be disturbed due to components failures
     measure: Redundancies in the IT systems
@@ -157,39 +216,6 @@ Hardening:
     dependsOn:
       - Infrastructure as Code
     implementation: Remove direct access to infrastructure
-    samm2: o-environment-management|A|1
-
-  Microservice Architecture:
-    risk: Monolithic applications are hard to test.
-    measure: A microservice-architecture helps to have small components, which are
-      easy to test.
-    difficultyOfImplementation:
-      knowledge: 4
-      time: 5
-      resources: 5
-    usefulness: 3
-    level: 4
-    samm: SA2
-    samm2: o-environment-management|A|1
-
-  Production near environments are used by developers:
-    risk: In case an errors occurs in production, the developer need to be able to
-      create a production near environment on a local development environment.
-    measure: Usage of infrastructure as code helps to create a production near environment.
-      The developer needs to be trained in order to setup a local develipment environment.
-      In addition, it should be possible to create production like test data. Often
-      peronal identifiable information is anonymised in order to comply with data
-      protection laws.
-    difficultyOfImplementation:
-      knowledge: 3
-      time: 3
-      resources: 3
-    usefulness: 4
-    level: 4
-    dependsOn:
-    - Defined deployment process
-    - Infrastructure as Code
-    samm: SA1
     samm2: o-environment-management|A|1
 
   Role based authentication and authorization:
@@ -205,8 +231,8 @@ Hardening:
     level: 3
     implementation: Verzeichnisdienst, Plugins
     dependsOn:
-    - Defined deployment process
-    - Defined build process
+      - Defined deployment process
+      - Defined build process
     samm2: o-environment-management|A|1
 
   Two Factor Authentication:
@@ -221,19 +247,47 @@ Hardening:
     implementation: Smartcard, YubiKey, SMS
     samm2: TODO
 
-  Simple access control for systems:
-    risk: Attackers a gaining access to interal systems and application interfaces
-    measure: All internal systems are using simple authentication
+  Limitation of system calls in virtual environments:
+    risk: System calls in virtual environments like docker can lead to privilege escalation.
+    measure: System calls in virtual environments like docker are audited and limited.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
       resources: 3
     usefulness: 5
-    level: 1
+    level: 4
+    dependsOn:
+      - Applications are running in virtualized environments
+    implementation: seccomp, strace
+    samm2: o-environment-management|A|1
+
+  Microservices architecture:
+    risk: Monolithic applications are hard to test.
+    measure: A microservice-architecture helps to have small components, which are
+      easy to test.
+    difficultyOfImplementation:
+      knowledge: 4
+      time: 5
+      resources: 5
+    usefulness: 3
+    level: 4
+    samm: SA2
+    samm2: o-environment-management|A|1
+
+  Dev-Prod parity:
+    risk: When errors occur in production, developers need to be able to recreate this in a local production-like development environment in order to test and fix with assurance.
+    measure: Usage of infrastructure as code helps to create a production-like environment.
+      In addition, it should be possible to create production-like test data. Personal information should be anonymised to comply with data protection laws.
+    difficultyOfImplementation:
+      knowledge: 3
+      time: 3
+      resources: 3
+    usefulness: 4
+    level: 4
     dependsOn:
     - Defined deployment process
-    implementation: HTTP-Basic Authentication, TLS, VPN
-    samm: EH1-B
+    - Infrastructure as Code
+    samm: SA1
     samm2: o-environment-management|A|1
 
   Usage of a chaos monkey:
@@ -248,63 +302,5 @@ Hardening:
       resources: 5
     usefulness: 3
     level: 4
-    samm2: o-environment-management|A|1
-
-  Usage of security by default for components:
-    risk: Components (images, libraries, applications) are not hardened.
-    measure: Hardening of components is important, specially for image on which other
-      teams base on. Hardening should be performed on the operation system and on
-      the services inside (e.g. Nginx or a Java-Application).
-    difficultyOfImplementation:
-      knowledge: 4
-      time: 3
-      resources: 1
-    usefulness: 3
-    level: 2
-    implementation: 'For applications: Check default encoding, managing secrets, crypto, authentication'
-    dependsOn:
-    - Defined build process
-    samm2: o-environment-management|A|1
-
-  Usage of test and production environments:
-    risk: Security tests are not running regulary because test environments are missing
-    measure: A production and a production like environment is used
-    difficultyOfImplementation:
-      knowledge: 3
-      time: 3
-      resources: 5
-    usefulness: 4
-    level: 1
-    dependsOn:
-    - Defined deployment process
-    samm2: o-environment-management|A|1
-
-  Versioning:
-    risk: Changes to production systems can not be undone.
-    measure: Versioning of artifacts related to production environments. For example
-      Jenkins configuration, docker images, system provisioning code.
-    difficultyOfImplementation:
-      knowledge: 3
-      time: 3
-      resources: 3
-    usefulness: 5
-    level: 3
-    dependsOn:
-    - Defined deployment process
-    samm2: o-environment-management|A|1
-
-  Virtual environments are limited:
-    risk: Denial of service (intenenally by an attacker or uninteninally by a bug)
-      on one service effects other services
-    measure: All virtual envirnoments are using resource limits on hard disks, memory
-      and CPU
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 2
-      resources: 3
-    usefulness: 3
-    level: 2
-    dependsOn:
-    - Applications are running in virtualized environments
     samm2: o-environment-management|A|1
 ...
