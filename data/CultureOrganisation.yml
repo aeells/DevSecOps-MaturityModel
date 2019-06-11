@@ -1,5 +1,6 @@
 ---
 Education and Guidance:
+
   Ad hoc security consulting:
     risk: Not asking a security expert when questions regarding security appear might lead to flaws. Not even being aware of security concerns in the first place will lead to security risks.
     measure: Security consulting to teams is given on request. The security consultants can be internal or external.
@@ -10,6 +11,7 @@ Education and Guidance:
     usefulness: 3
     level: 1
     samm: EG2-B
+
   Each team has a Security Champion:
     risk: No one feels directly responsible for security and the securiy champion does not have enough time to allocate to each team.
     measure: Each team defines an individual to be responsible for security. These individuals are often referred to as 'Security Champions'.
@@ -22,6 +24,19 @@ Education and Guidance:
     samm: EG2-B
     implementation:
       - <a href="https://www.owasp.org/index.php/Security_Champions_Playbook">Security Champions Playbook</a>
+
+  Recognising security motivation:
+    risk: Oftentimes motivating security champions is a challenge. Most of the time, they're not willing to dedicate the time and effort to the invisible part of security. The product owners themselves focus on pushing the developement of features therefore the nessecity of security is often neglected or almost completely overlooked.
+    measure: There is a need to visualize the investment in security, made by a champion or an entire team.
+    difficultyOfImplementation:
+      knowledge: 3
+      time: 2
+      resources: 1
+    usefulness: 3
+    level: 2
+    implementation: One example is the distributon of buttons as a reward.
+      - <a href='https://www.owasp.org/index.php/OWASP_Security_Buttons_Project'>OWASP Security Buttons Project</a>
+
   Security Lessons Learned:
     risk: After an incident, unless root causes actively addressed, a similar incident might reoccur.
     measure: Running a 'lessons learned' session after an incident helps drive continuous improvement.
@@ -33,6 +48,7 @@ Education and Guidance:
     usefulness: 3
     level: 3
     samm: IM-3, ST-3, SR2-B
+
   Collaborative Security forums with Developers and Sys Admins:
     risk: Security checks by external companies do not increase the understanding of an application or system for internal employees.
     measure: Periodic security reviews of source code (SCA), in which Security SMEs, Developers and Operations are envolved, are effectve at increasing
@@ -44,9 +60,22 @@ Education and Guidance:
     usefulness: 3
     level: 3
     samm: IR1-B
-  Conduction of collaborative team security checks:
-    risk: Developement teams hlimited insight over security practices.
-    measure: Mutual security testing the security of other teams's project enhances security awareness and knowledge.
+
+  Conduct Build it, Break it, Fix it contests:
+    risk: The time and ability to focus on security concerns is often limited in a delivery-based context. As such, the opportunity to experiment and learn in the complex security arena is often limited.
+    measure: The Build it Break it Fix it security contest aims to teach students to write more secure programs.
+    difficultyOfImplementation:
+      knowledge: 3
+      time: 3
+      resources: 1
+    usefulness: 3
+    level: 3
+    implementation:
+      - <a href="https://builditbreakit.org/">Build it, Break it, Fix it Contest</a>
+
+  Cross-team collaboration on security:
+    risk: Some development teams may have limited insight into security best-practices.
+    measure: Mutual testing of the security of other teams applications and infrastructure enhances everyones security awareness and knowledge.
     difficultyOfImplementation:
       resources: 2
       knowledge: 4
@@ -54,55 +83,81 @@ Education and Guidance:
     usefulness: 2
     level: 4
     samm: EG2-A
-  Conduction of build-it, break-it, fix-it contests:
-    risk: Understanding security is hard, even for security champions and the conduction of security training often focuses on breaking a component instead of building a component secure.
-    measure: The build-it, break-it, fix-it contest allows to train people with security related roles like security champions the build, break and fix part of a secure application. This increases the learning of building secure components.
-    difficultyOfImplementation:
-      knowledge: 3
-      time: 3
-      resources: 1
-    usefulness: 3
-    level: 3
-    implementation: https://builditbreakit.org/
-  Conduction of war games:
-    risk: Understanding incident response plans during an incident is hard and ineffective.
-    measure: War Games like activities help train for incidents. Security SMEs create attack scenarios
-      in a testing environment enabling the rainees to learn how to react in case of an incident.
+
+  Conduct war games:
+    risk: Understanding incident response plans during an incident is hard and ineffective without prior dry-runs.
+    measure: War Games help train for real-world incidents. Security SMEs create attack scenarios in a test environment enabling the respondents to learn how to react in case of an incident.
     difficultyOfImplementation:
       knowledge: 4
       time: 5
       resources: 5
     usefulness: 2
     level: 4
-  Reward of good communication:
-    risk: Employees are not getting excited about security.
-    measure: Good communication and transparency encourages cross-organisational support. Gamification of security is also known to help, examples include T-Shirts, giftcards and 'High-Fives'.
+
+Organisational:
+
+  Information security targets communicated:
+    risk: Employees don't known their organication security targets. Therefore security is not effectively considered during development and operationally.
+    measure: Transparent and timely communication of the security targets by senior management is essential to ensure teams' buy-in and support.
     difficultyOfImplementation:
-      knowledge: 3
+      knowledge: 1
+      time: 1
+      resources: 1
+    usefulness: 4
+    level: 1
+    samm: SM1-B
+
+  Creation of simple abuse stories:
+    risk: User stories usually don't consider security implications. Security flaws are discovered too late in the development and deployment process.
+    measure: Abuse stories are created early during the sprint planning ceremony.
+    difficultyOfImplementation:
+      knowledge: 2
       time: 2
       resources: 1
-    usefulness: 3
+    usefulness: 4
     level: 2
-    implementation: One example is the distributon of buttons as a reward, see <a
-      href='https://www.owasp.org/index.php/OWASP_Security_Buttons_Project'>OWASP
-      Security Buttons Project</a>
+    samm: TA2-A
+    implementation: <a href='https://www.owasp.org/index.php/Agile_Software_Development:_Don%27t_Forget_EVIL_User_Stories'>Don't
+      Forget EVIL User Stories</a> and <a href='http://safecode.org/publication/SAFECode_Agile_Dev_Security0712.pdf'>Practical
+      Security Stories and Security Tasks for Agile Development Environments</a>
+
+  Conduct simple threat modelling on business level:
+    risk: Business-related threats are discovered too late in the development and deployment process.
+    measure: Threat modelling of business functionality is performed during the product sprint planning to facilitate early detection of security defects.
+    difficultyOfImplementation:
+      knowledge: 2
+      time: 3
+      resources: 1
+    usefulness: 3
+    level: 3
+    samm: TA1-A
+
+  Conduct simple threat modelling on technical level:
+    risk: Technical-related threats are discovered too late in the development and deployment process.
+    measure: Threat modelling of technical features is performed during the product sprint planning to facilitate early detection of security defects.
+    difficultyOfImplementation:
+      knowledge: 2
+      time: 3
+      resources: 1
+    usefulness: 3
+    level: 3
+    samm: TA1-A
+
   Aligning security in teams:
-    risk: The concept of Security Champions might suggest that only he/she is repsonsible
-      for security. However, everyone in the project team should be responsible for security.
-    measure: By aligning security SME with project teams, a higher security
-      standard can be achieved.
+    risk: The concept of Security Champions might suggest they are solely repsonsible for security. However, everyone in the project team should be responsible.
+    measure: By aligning security SMEs with project teams, a higher security standard can be achieved.
     difficultyOfImplementation:
       knowledge: 4
       time: 5
       resources: 1
-    implementation: Security SME are involved in discussion for requirements analysis, software design and sprint planning to provide guidance and suggestions.
+    implementation: Security SMEs are involved in requirements analysis, software design and sprint planning to provide guidance and suggestions.
     usefulness: 5
     level: 4
     samm: EG2-B
-Culture and Org.:
-  Conduction of advanced threat modelling:
+
+  Conduct advanced threat modelling:
     risk: Inadequate identification of business and technical risks.
-    measure: Threat modelling is performed by using reviewing user stories and producing security driven data flow diagramms.
+    measure: Threat modelling is performed by reviewing user stories and producing security driven data flow diagrams.
     difficultyOfImplementation:
       knowledge: 4
       time: 3
@@ -110,34 +165,9 @@ Culture and Org.:
     usefulness: 3
     level: 4
     samm: TA2-B
-  Conduction of simple threat modelling on business level:
-    risk: Business related threats are discovered too late in the development and
-      deployment process.
-    measure: Threat modelling of business functionality is performed during the product backlog
-      creation to facilitate early detection of security defects.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 3
-      resources: 1
-    usefulness: 3
-    level: 3
-    samm: TA1-A
-  Conduction of simple threat modelling on technical level:
-    risk: Technical related threats are discovered too late in the development and
-      deployment process.
-    measure: Threat modelling of technical features is performed during the product sprint
-      planning.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 3
-      resources: 1
-    usefulness: 3
-    level: 3
-    samm: TA1-A
+
   Creation of advanced abuse stories:
-    risk: Simple user stories are not going deep enough. Relevant security considerations
-      are performed. Security flaws are discovered too late in the development and
-      deployment process
+    risk: Simple user stories do not address complex security threat scenarios. Security flaws are discovered very late in the development and deployment process.
     measure: Advanced abuse stories are created as part of threat modelling activities.
     difficultyOfImplementation:
       knowledge: 4
@@ -148,41 +178,16 @@ Culture and Org.:
     dependsOn:
       - Creation of simple abuse stories
     samm: TA2-A
-    implementation: <a href='https://www.owasp.org/index.php/Agile_Software_Development:_Don%27t_Forget_EVIL_User_Stories'>Don't
-      Forget EVIL User Stories</a> and <a href='http://safecode.org/publication/SAFECode_Agile_Dev_Security0712.pdf'>Practical
-      Security Stories and Security Tasks for Agile Development Environments</a>
-  Creation of simple abuse stories:
-    risk: User stories mostly don't consider security implications. Security flaws
-      are discovered too late in the development and deployment process.
-    measure: Abuse stories are created during the creation of user stories.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 2
-      resources: 1
-    usefulness: 4
-    level: 2
-    samm: TA2-A
-    implementation: <a href='https://www.owasp.org/index.php/Agile_Software_Development:_Don%27t_Forget_EVIL_User_Stories'>Don't
-      Forget EVIL User Stories</a> and <a href='http://safecode.org/publication/SAFECode_Agile_Dev_Security0712.pdf'>Practical
-      Security Stories and Security Tasks for Agile Development Environments</a>
-  Information security tragets are communicated:
-    risk: Employees don't known their organication security targets. Therefore
-      security is not considered during development and administration as much as
-      it should be.
-    measure: Transparent and timely communication of the security targets by senior
-      management is essential to ensure teams' buy-in and support.
-    difficultyOfImplementation:
-      knowledge: 1
-      time: 1
-      resources: 1
-    usefulness: 4
-    level: 1
-    samm: SM1-B
+    implementation:
+      - <a href='https://www.owasp.org/index.php/Agile_Software_Development:_Don%27t_Forget_EVIL_User_Stories'>Don't Forget EVIL User Stories</a> and
+      - <a href='http://safecode.org/publication/SAFECode_Agile_Dev_Security0712.pdf'>Practical Security Stories and Security Tasks for Agile Development Environments</a>
+
 Process:
-  #  Data classification:
-  Definition of simple BCDR practices for critical components:
+
+  Business continuity and disaster recovery practices:
     risk: In case of an emergency, like a power outage, DR actions to perform are not clear. This leads to reaction and remediation delays.
-    measure: By understanding and documenting a business continuity and disaster recovery (BCDR) plan, the overall availabilitiy of systems and applications is increased. Success factors like responsibilties, Service Level Agreemenmts, Recovery Point Objectives, Recovery Time Objectives or Failover must be fully documentate and understood.
+    measure: By understanding and documenting a business continuity and disaster recovery (BCDR) plan, the overall availabilitiy of systems and applications is increased.
+    Success factors like responsibilties, Service Level Agreemenmts, Recovery Point Objectives, Recovery Time Objectives or Failover must be fully documented and practiced.
     difficultyOfImplementation:
       knowledge: 4
       time: 3
@@ -190,9 +195,9 @@ Process:
     usefulness: 4
     level: 1
 
-  Definition of a change mangement process:
+  Change Mangement process definition:
     risk: The impact of a change is not controlled because these are not recorded or documented.
-    measure: Each change of a system is automatically recorded and adequately logged.
+    measure: Each change of a system is automatically recorded and adequately logged. This should be via source controlled audit and promotion to prior environments.
     difficultyOfImplementation:
       knowledge: 4
       time: 3
@@ -200,31 +205,28 @@ Process:
     usefulness: 3
     level: 3
 
-  Approval by reviewing any new version:
-    risk: An individual might forget to implement security measures to protect source code or infrastructure
-      components.
-    measure: On each new version (e.g. Pull Request) of source code or infrastructure
-      components a security peer review of the changes is performed (two eyes principle) and approval given by the reviewer.
+  Pull Request approvals:
+    risk: An individual might forget to implement security measures to protect source code or infrastructure components.
+    measure: All changes (of application and IaC) should undergo a security peer review (two eyes principle) and approval.
     difficultyOfImplementation:
       knowledge: 2
       time: 2
       resources: 1
     usefulness: 3
     level: 3
+    dependsOn:
+      - Security coding guidelines
     samm: IR1-B
-
-  #  Used licenses of components are known:
 
   Prevention of unauthorized installation:
     risk: Unapproved components are used.
-    measure: "Components must be whitelisted. Regular scans on the docker infrastructure (e.g. cluster) need to be performed, to verify that only standardized base images are used."
+    measure: Components must be whitelisted. Regular scans on eg. the docker cluster need to be performed to verify that only standard base images are used.
     difficultyOfImplementation:
       knowledge: 2
       time: 1
       resources: 1
     usefulness: 3
     level: 3
-    implementation: "Example: All docker images used by teams need to be based on standard images."
-    comment: "By preventing teams from trying out new components, innovation might be hampered"
+    comment: By preventing teams from trying out new components, innovation might be hampered.
 
 ...

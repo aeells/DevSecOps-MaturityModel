@@ -1,5 +1,6 @@
 ---
 Build:
+
   Security coding guidelines:
     risk: Java comes with its own unique set of security challenges. While the Java security architecture [1] can in many cases help to protect users and systems from hostile or misbehaving code, it cannot defend against implementation bugs that occur in trusted code. Such bugs can inadvertently open the very holes that the security architecture was designed to contain. In severe cases local programs may be executed or Java security disabled. These bugs can potentially be used to steal confidential data from the machine and intranet, misuse system resources, prevent useful operation of the machine, assist further attacks, and many other malicious activities.
     measure: To minimize the likelihood of security vulnerabilities caused by programmer error, Java developers should adhere to recommended coding guidelines.
@@ -12,6 +13,7 @@ Build:
     implementation:
       - <a href='https://www.oracle.com/technetwork/java/seccodeguide-139067.html'>Secure Coding Guidelines for Java SE</a>
     samm2: i-secure-build|A|1
+
   Repeatable build process:
     risk: Performing builds without a defined process is error prone.
       For example, as a result of incorect security related configuration.
@@ -25,6 +27,7 @@ Build:
     level: 1
     implementation: "Git"
     samm2: i-secure-build|A|1
+
   Automated security acceptance tests:
     risk: After code review and merge of Pull Request branches to the master branch, any delay in receiving feedback on defects makes them harder for the developer to remediate.
     measure: On each merge and/or at given intervals automatic security acceptance tests are performed.
@@ -36,6 +39,7 @@ Build:
     level: 2
     implementation: ""
     samm2: i-secure-build|A|3
+
   Digitally signed commits:
     risk: Unauthorized manipulation of source code might be difficult to spot.
     measure: Digitally signing commits helps to prevent unauthorized manipulation of source code.
@@ -50,6 +54,7 @@ Build:
     - Defined build process
     samm: OA3-B
     samm2: i-secure-build|A|2
+
   Digitally signed artefacts:
     risk: Unauthorized manipulation of artefacts might be difficult to spot. For example, this may result in
       images with malicious code in the Docker registry.
@@ -67,6 +72,7 @@ Build:
     - Defined build process
     samm: OA3-B
     samm2: i-secure-build|A|1
+
   Build and test of artefacts in virtual environments:
     risk: While building and testing applications, 3rd party systems, application frameworks
       and 3rd party libraries are used. These might be malicious as a result of vulnerable
@@ -80,7 +86,9 @@ Build:
     level: 4
     implementation: Docker
     samm2: i-secure-build|A|2
+
 Deployment:
+
   Defined deployment process:
     risk: Deployments without a defined process are error prone thus allowing old, untested or artefacts without provenance to be deployed.
     measure: A defined deployment process significantly lowers the risk of security errors during the deployment phase.
@@ -92,6 +100,7 @@ Deployment:
     level: 1
     implementation: Jenkins, Docker
     samm2: i-secure-deployment|A|1
+
   Inventory of running artifacts:
     risk: In case a high severity or critical vulnerability exists, it needs to be known where an artifacts with that vulnerability are deployed with which dependencies.
     Measure: A documented inventory or a possibility to gather the requierd information (e.g. the documentation of which script needs to be run by whom) must be in place.
@@ -105,6 +114,7 @@ Deployment:
     usefulness: 3
     level: 1
     samm2: o-incident-management|TODO
+
   Backup before deployment:
     risk: If errors are experienced during the deployment process you want to deploy
       an old release. However, due to changes in the database this is often unfeasible.
@@ -121,6 +131,7 @@ Deployment:
     - Defined deployment process
     samm: OE2-A
     samm2: TODO
+
   Rollback deployment:
     risk: Similarly, if errors are experienced during the deployment process you might want to deploy
       the previous release.
@@ -136,6 +147,7 @@ Deployment:
     - Defined deployment process
     samm: OE2-A
     samm2: TODO
+
   Configuration externalised from environments:
     risk: Attackers who compromise source code can see confidential access information like database credentials.
     measure: Configuration parameters for each environment reside in source control repository separate from the application codebase.
@@ -148,6 +160,7 @@ Deployment:
     implementation: ""
     samm: SA2-A
     samm2: i-secure-deployment|B|1
+
   Use of trusted images:
     risk: Untrusted images in the production cluster may have malicous code or known vulnerabilities.
     Measure: Whitelist signed artificats/images or whitelist a trusted (internal) registry.
@@ -160,6 +173,7 @@ Deployment:
     usefulness: 3
     level: 2
     samm2: i-secure-deployment|A|2
+
   Rolling update on deployment:
     risk: While a deployment is performed, the application can not be reached.
     measure: A deployment without downtime is performed*.
@@ -173,6 +187,7 @@ Deployment:
     dependsOn:
     - Defined deployment process
     samm2: i-secure-deployment|A|1
+
   Build only once:
     risk: Building an artefact for different environments means that an untested artefact might reach the production environment.
     measure: Building an artefact once and deploying it to pipelined environments means that only tested artefacts are allowed to reach the production.
@@ -187,6 +202,7 @@ Deployment:
     - Defined build process
     samm: OE2-A
     samm2: i-secure-deployment|A|2
+
   Usage of feature toggles:
     risk: By using environment dependent configuration, some parameters will not be tested correctly. i.e. <pre>if (host == 'production') {} else {}</pre>
     measure: Usage of environment independent configration parameters, called feature toggles, helps to enhance the test coverage. Only what has been tested, goes to production.
@@ -201,6 +217,7 @@ Deployment:
     - Build only once
     samm: EG1-B
     samm2: TODO
+
   Blue/Green Deployments:
     risk: A new artefact version can have unknown defects.
     measure: By having multiple production environments, a deployment can be performed on the first environment to spot possible defects before it is deployed to the sibling production cluster.
