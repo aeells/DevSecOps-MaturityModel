@@ -235,8 +235,8 @@ Hardening:
     usefulness: 4
     level: 4
     dependsOn:
-    - Defined deployment process
-    - Infrastructure as Code
+      - Defined deployment process
+      - Infrastructure as Code
     samm: SA1
     samm2: o-environment-management|A|1
 
