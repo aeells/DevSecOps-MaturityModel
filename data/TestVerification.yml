@@ -16,11 +16,9 @@ Static application analysis:
 #    samm: SA
 #    samm2: v-security-testing|A|2
 
-  Static analysis of server side components:
-    risk: Important parts in the source code of the middleware have vulnerabilities.
-    measure: Usage of static analysis tools for important parts of the middleware
-      are used. Static analysis uses for example string matching algorithms and/or
-      dataflowanalysis.
+  Server-side SCA:
+    risk: Source code contains bugs and security vulnerabilities.
+    measure: Implementation of static code analysis tools embedded in the SDLC.
     difficultyOfImplementation:
       knowledge: 2
       time: 2
@@ -32,16 +30,15 @@ Static application analysis:
       - Defined build process
     samm2: v-security-testing|A|2
 
-  Static analysis for important client side components:
-    risk: Important parts in the source code of the frontend have vulnerabilities.
-    measure: Usage of static analysis tools for important parts of the frontend are
-      used. Static analysis uses for example string matching algorithms and/or dataflowanalysis.
+  Client-side SCA:
+    risk: Source code contains bugs and security vulnerabilities.
+    measure: Implementation of static code analysis tools embedded in the SDLC.
     difficultyOfImplementation:
       knowledge: 2
       time: 2
       resources: 1
-    usefulness: 3
-    level: 3
+    usefulness: 4
+    level: 2
     implementation:
       - eslint
       - FindSecurityBugs
@@ -51,8 +48,8 @@ Static application analysis:
     dependsOn:
       - Defined build process
 
-  Test of client side components with known vulnerabilities:
-    risk: Client side components might have vulnerabilities.
+  Client-side components with known vulnerabilities SCA:
+    risk: Source code contains bugs and security vulnerabilities.
     measure: Tests for known vulnerabilities in components of the frontend are performed.
     difficultyOfImplementation:
       knowledge: 1
@@ -67,10 +64,9 @@ Static application analysis:
       - <a href="https://docs.npmjs.com/cli/audit">npm audit</a>
     samm2: v-security-testing|A|2
 
-  Usage of multiple scanners:
-    risk: Each vulnerability scanner has different opportunities. By using just one
-      scanner, some vulnerabilities might not be found.
-    measure: Usage of multiple static tools to find more vulnerabilities.
+  Usage of multiple SCA scanners:
+    risk: Each vulnerability scanner has different opportunities. By using just one scanner some vulnerabilities might not be found.
+    measure: Usage of multiple static code analysis tools to find more vulnerabilities.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -81,7 +77,7 @@ Static application analysis:
       - Usage of different roles
     samm2: v-security-testing|A|2
 
-  Exclusion of source code duplicates:
+  Reduction in duplication of source code:
     risk: Duplicates in source code might influence the stability of the application.
     measure: Automatic Detection and manual removal of duplicates in source code.
     difficultyOfImplementation:
@@ -90,14 +86,16 @@ Static application analysis:
       resources: 1
     usefulness: 1
     level: 4
-    implementation: PMD
     dependsOn:
       - Defined build process
+    implementation:
+      - <a href="https://pmd.github.io/latest/pmd_userdocs_cpd.html#why-should-you-care-about-duplicates">Why should you care about duplicates?</a>
     samm2: v-security-testing|A|2
 
-  Static analysis for all components/libraries:
-    risk: Used components like libraries and legacy applications might have vulnerabilities
-    measure: Usage of a static analysis for all used components.
+  3rd party library SCA:
+    risk: 3rd party dependency library usage is significant and there are likely to be vulnerabilities present, particularly if these libraries are not kept up to date with the
+      latest version.
+    measure: Implementation of binary static code analysis tools embedded in the SDLC.
     difficultyOfImplementation:
       knowledge: 2
       time: 4
@@ -105,37 +103,21 @@ Static application analysis:
     usefulness: 3
     level: 4
     dependsOn:
-      - "Static analysis for important client side components"
-      - "Static analysis for important server side components"
+      - "Static analysis of server-side components"
+      - "Static analysis of client-side components"
+    implementation: OWASP Dependency Check
     samm2: v-security-testing|A|2
 
-  Static analysis for all self written components:
-    risk: Parts in the source code of the frontend or middleware have vulnerabilities.
-    measure: Usage of static analysis tools for all parts of the middleware and frontend.
-      Static analysis uses for example string matching algorithms and/or dataflowanalysis.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 2
-      resources: 1
-    usefulness: 4
-    level: 4
-    implementation: eslint, FindSecurityBugs, jsprime
-    dependsOn:
-      - "Static analysis for important client side components"
-      - "Static analysis for important server side components"
-    samm2: v-security-testing|A|2
-
-  Stylistic analysis:
-    risk: False source code indenting might lead to vulnerabilites.
-    measure: Analysis of compliance to style guides of the source code ensures that
-      source code indenting rules are met.
+  Coding style SCA:
+    risk: Inconsistent coding styles lead to unreadable code. This in turn makes it harder to refactor and this in turn increases the likelihood of bugs significantly over time.
+    measure: Analysis of compliance to coding style guides.
     difficultyOfImplementation:
       knowledge: 1
       time: 1
       resources: 1
     usefulness: 1
     level: 4
-    implementation: PMD
+    implementation: PMD, Checkstyle
     samm2: v-security-testing|A|2
 
 Dynamic application analysis:
@@ -174,7 +156,7 @@ Dynamic application analysis:
       - Simple Scan
     samm2: v-security-testing|A|2
 
-  Coverage of client side dynamic components:
+  Coverage of client-side dynamic components:
     risk: Parts of the service are not covered during the scan, because JavaScript
       is not getting executed. Therefore, the co
     measure: Usage of a spider which executes dynamic content like JavaScript, e.g.

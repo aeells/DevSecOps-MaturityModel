@@ -2,7 +2,10 @@
 Build:
 
   Security coding guidelines:
-    risk: Java comes with its own unique set of security challenges. While the Java security architecture [1] can in many cases help to protect users and systems from hostile or misbehaving code, it cannot defend against implementation bugs that occur in trusted code. Such bugs can inadvertently open the very holes that the security architecture was designed to contain. In severe cases local programs may be executed or Java security disabled. These bugs can potentially be used to steal confidential data from the machine and intranet, misuse system resources, prevent useful operation of the machine, assist further attacks, and many other malicious activities.
+    risk: Java comes with its own unique set of security challenges. While the Java security architecture can in many cases help to protect users and systems from hostile or
+      misbehaving code, it cannot defend against implementation bugs that occur in trusted code. Such bugs can inadvertently open the very holes that the security architecture
+      was designed to contain. In severe cases local programs may be executed or Java security disabled. These bugs can potentially be used to steal confidential data from the
+      machine and intranet, misuse system resources, prevent useful operation of the machine, assist further attacks, and many other malicious activities.
     measure: To minimize the likelihood of security vulnerabilities caused by programmer error, Java developers should adhere to recommended coding guidelines.
     difficultyOfImplementation:
       knowledge: 2
