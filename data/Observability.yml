@@ -2,9 +2,8 @@
 Monitoring:
 
   Simple application metrics:
-    risk: Attacks on an application are not recognized.
-    measure: Gathering of application metrics helps to identify incidents like brute
-      force attacks, login/logout.
+    risk: Attacks on an application or system go unnoticed.
+    measure: Gathering of application metrics helps to identify incidents such as brute force login attempts or DDoS attacks.
     difficultyOfImplementation:
       knowledge: 2
       time: 2
@@ -15,44 +14,43 @@ Monitoring:
     samm2: o-incident-management|A|1
 
   Simple system metrics:
-    risk: Without simple metrics analysis of incidents are hard. In case an application
-      uses a lot of CPU from time to time, it is hard for a developer to find out
-      the source with linux commands.
-    measure: Gathering of system metrics helps to identify incidents and specially
-      bottlenecks like in CPU usage, memory usage and hard disk usage.
+    risk: Without simple metrics, analysis and interpretation of incidents can be difficult. In the case an application with CPU spikes, it might be hard for Operations to
+      ascertain the source of the issue relying on Linux commands alone.
+    measure: Gathering of system metrics helps to identify and troubleshoot incidents.
     difficultyOfImplementation:
       knowledge: 2
       time: 2
       resources: 2
     usefulness: 5
     level: 1
-    implementation: collectd
+    implementation: collectd, AWS CloudWatch
     samm2: o-incident-management|A|1
 
-  Visualized metrics:
-    risk: Not vizualized metrics lead to restricted usage of metrics.
-    measure: Metrics are vizualized in real time in a user friendly way.
+  Metrics dashboards:
+    risk: Not vizualising metrics lead to restricted awareness, feedback and corrective behaviour.
+    measure: Metrics vizualised in realtime in a user-friendly way.
     difficultyOfImplementation:
       knowledge: 1
       time: 2
       resources: 2
     usefulness: 3
     level: 2
+    implementation: Graphite, Datadog
     dependsOn:
       - Simple application metrics
       - Simple system metrics
     samm2: o-incident-management|A|2
 
   Alerting:
-    risk: Incidents are discovered after they happend.
-    measure: Thresholds for metrics are set. In case the thresholds are reached, alarms
-      are send out. Which should get attention due to the critically.
+    risk: Incidents are discovered after they occur and continue to occur affecting more customers than necessary.
+    measure: Thresholds for metrics are set and alarms triggered if thresholds met. Notifications can then be sent to Operations to investigate with immediate effect.
     difficultyOfImplementation:
       knowledge: 2
       time: 5
       resources: 5
     usefulness: 5
     level: 2
+    implementation: AWS CloudWatch & SNS, ServiceNow
     dependsOn:
       - Visualized metrics
     samm2: o-operational-management|B|3
@@ -60,8 +58,7 @@ Monitoring:
 
   Advanced availablity and stability metrics:
     risk: Trends and advanced attacks are not detected.
-    measure: Advanced metrics are gathered in relation to availability and stability.
-      For example unplanned downtimes per year.
+    measure: Advanced metrics are gathered in relation to availability and stability of platform. For example unplanned downtimes per year are captured and reported.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -73,10 +70,10 @@ Monitoring:
     - Visualized metrics
     samm2: o-incident-management|A|2
 
-  Advanced webapplication metrics:
-    risk: People are not looking into tests results. Vulnerabilities not recolonized,
-      even they are detected by tools.
-    measure: All defects from the dimension Test- and Verification are instrumented.
+  Advanced web application metrics:
+    risk: Awareness of various aspects which could affect customer experience is limited without monitoring and reporting. For instance, incorrect Google tags in search results,
+      missing static content and 404 requests, repeatable or consistent stack traces or a throughput bottleneck with a specific application feature.
+    measure: All defects from the Test Verification dimension are instrumented.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -88,9 +85,9 @@ Monitoring:
     - Visualized metrics
     samm2: o-incident-management|A|2
 
-  Deactivation of unused metrics:
-    risk: High resources are used while gathering unused metrics.
-    measure: Deactivation of unused metrics helps to free resources.
+  Deactivation of redundant metrics:
+    risk: Significant resources may be utilised in gathering redundant metrics.
+    measure: Deactivation of unused metrics helps to free up resources, either manual or automated.
     difficultyOfImplementation:
       knowledge: 2
       time: 5
@@ -101,42 +98,13 @@ Monitoring:
       - Visualized metrics
     samm2: o-incident-management|A|1
 
-  Grouping of metrics:
-    risk: The analysis of metrics takes long.
-    measure: Meaningful grouping of metrics helps to speed up analysis.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 4
-      resources: 2
-    usefulness: 2
-    level: 3
-    samm2: o-incident-management|A|2
-
-  Targeted alerting:
-    risk: People are bored (irodiert) of incident alarm messages, as they are not
-      responsbile to react.
-    measure: By the defintion of target groups for incidents people are only getting
-      alarms for incidents they are in charge for.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 5
-      resources: 5
-    usefulness: 5
-    level: 3
-    dependsOn:
-      - Alerting
-    samm: OE1-B
-    samm2: o-operational-management|B|3
-
   Coverage and control metrics:
-    risk: The effectiveness of configuration, patch and vulnerablity management is
-      unknown.
-    measure: "Usage of Coverage- and control-metrics to show the effectivness of the
-      security programm. Coverage is the degree in \n        which a specific security
-      control for a specifc target group is applied with all resoucres.\n        The
-      control degree shows the actual application of security standards and security-guidelines.
-      Examples are gathering information on anti-virus, anti-rootkits, patch management,
-      server configuration and vulnerability management."
+    risk: Coverage and control metrics characterize how successful an organization is at extending the reach of its security régime. Most security programs are full of good
+      intentions, usually expressed formally through some sort of policy. But the reality of suboptimal implementation and poor end-user compliance often puts the shaft to all
+      those good intentions.
+    measure: Coverage and control metrics, then, are essential to helping managers understand the size of the gap between intentions and facts on the ground.
+      The control degree shows the actual application of security standards and security-guidelines. Examples are gathering information on anti-virus, anti-rootkits, patch
+      management, server configuration and vulnerability management.
     difficultyOfImplementation:
       knowledge: 3
       time: 5
@@ -149,10 +117,8 @@ Monitoring:
     samm2: o-incident-management|A|2
 
   Defence metrics:
-    risk: IDS/IPS systems like packet- or application-firewalls detect and prevent
-      attacks. It is not known how many attacks has been detected and blocked.
-    measure: Gathering of defence metrics like TCP/UDP sources enables to assume the
-      geographic location of the requeist.
+    risk: IDS & IPS tools like packet or application firewalls detect and prevent attacks. It is not known how many attacks have been detected and blocked.
+    measure: Gathering of defence metrics such as TCP/UDP sources for instance would enable one to assume the geographic location requests.
     difficultyOfImplementation:
       knowledge: 3
       time: 5
@@ -163,50 +129,23 @@ Monitoring:
     - Visualized metrics
     samm2: o-incident-management|A|2
 
-  Metrics are combined with tests:
-    risk: Changes might cause high load due to programming errors.
-    measure: Metrics during tests helps to identify programming errors.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 3
-      resources: 2
-    usefulness: 5
-    level: 4
-    dependsOn:
-    - Grouping of metrics
-    samm2: o-incident-management|A|2
-
-  Screens with metric visualization:
-    risk: Security related information is discovered too late during an incident.
-    measure: By having an internal accessable screen with a security related dashboards
-      helps to visualize incidents.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 1
-      resources: 1
-    usefulness: 5
-    level: 4
-    dependsOn:
-    - Grouping of metrics
-    samm2: o-incident-management|A|2
-
 Logging:
 
-  PII logging concept:
-    risk: Personal identifiable information (PII) is logged and the law of GDPR is not followed.
-    measure: A concept how to log PII is documented and applied.
+  PII logging policy:
+    risk: Personal Identifiable Information (PII) is logged and GDPR regulations are contravened.
+    measure: A strategy for how to log PII is documented and enforced.
     difficultyOfImplementation:
       knowledge: 1
       time: 1
       resources: 1
     usefulness: 1
     level: 1
-    implementation: rsyslog, logstash, fluentd, bash
+    implementation: rsyslog, loggly, fluentd, bash
     samm2: o-incident-management|A|1
 
-  Logging of security events:
-    risk: No track of security-relevant events makes it harder to analyse an incident.
-    measure: Security-relevant events like login/logout or creation, change, deletion of users should be logged.
+  Record of security-related events:
+    risk: No record of security-related events makes it harder to analyse an incident.
+    measure: Security-related events such as login or logout or change of password should be logged and auditable.
     difficultyOfImplementation:
       knowledge: 1
       time: 1
@@ -214,16 +153,14 @@ Logging:
     usefulness: 4
     level: 1
     dependsOn:
-      - PII logging concept
+      - PII logging policy
     implementation: rsyslog, logstash, fluentd, bash
     samm2: o-incident-management|A|1
 
   Centralized system logging:
-    risk: Local stored system logs can be unauthorized manipulated by attackers or
-      might be corrupt after an incident. In addition, it is hard to perform a aggregation
-      of logs.
-    measure: By using centralized logging logs are protected against unauthorized
-      modification.
+    risk: Locally stored system logs can be manipulated by attackers or unauthorized users with systems access, or might be corrupted by an incident.
+      In addition, it is hard to perform aggregation of logs until they are shipped to a central store so the full security picture of an incident cannot be learned.
+    measure: By implementing centralized logging, system logs are protected against unauthorized modification and a clearer security picture of events emerges.
     difficultyOfImplementation:
       knowledge: 1
       time: 1
@@ -233,12 +170,10 @@ Logging:
     implementation: rsyslog, Logstash
     samm2: o-incident-management|A|1
 
-  Visualized logging:
-    risk: System and application protocols are not visualized properly which leads
-      to no or very limited logging assessment. Specally developers might have difficulty
-      to read applications logs with unusually tools like the Linux tool 'cat'
-    measure: Protocols are visualized in a simple to use real time monitoring system.
-      The GUI gives the ability to search for specal attributes in the protocol.
+  Aggregated log visualisation:
+    risk: System and application logs are not aggregated properly which leads to little or no logging assessment.
+    measure: Logs are collected, aggregated and graphed in a simple to use real time monitoring system. The GUI gives the ability to search the logs for specific user attributes
+      or security-related events etc.
     difficultyOfImplementation:
       knowledge: 1
       time: 3
@@ -252,11 +187,9 @@ Logging:
     samm2: o-incident-management|A|1
 
   Centralized application logging:
-    risk: Local stored logs can be unauthorized manipulated by attackers with system
-      access or might be corrupt after an incident. In addition, it is hard to perform
-      an correlation of logs. This leads attacks, which can be performed silently.
-    measure: A centralized logging system is used and applications logs (including
-      application exceptions) are shipped to it.
+    risk: Locally stored application logs can be manipulated by attackers or unauthorized users with systems access, or might be corrupted by an incident.
+      In addition, it is hard to perform aggregation of logs until they are shipped to a central store so the full security picture of an incident cannot be learned.
+    measure: By implementing centralized logging, application logs are protected against unauthorized modification and a clearer security picture of events emerges.
     difficultyOfImplementation:
       knowledge: 1
       time: 1
@@ -264,16 +197,14 @@ Logging:
     usefulness: 5
     level: 3
     dependsOn:
-      - Visualized logging
+      - Aggregated log visualisation
       - Alerting
     samm: SA2-B
     samm2: o-incident-management|A|1
 
-  Correlation of security events:
-    risk: Detection of security related events with hints on different systems/tools/metrics
-      is not possible.
-    measure: Events are correlated on one system. For example the correlation and
-      visualisationof enhance login tries combined with successfull logins.
+  Correlation of security-related events:
+    risk: Detection of security related events across different systems/tools/metrics is not possible.
+    measure: Events are correlated on a single system. For example the correlation and visualisation of user login attempts to successful logins.
     difficultyOfImplementation:
       knowledge: 4
       time: 4
@@ -281,7 +212,7 @@ Logging:
     usefulness: 3
     level: 4
     dependsOn:
-    - Visualized logging
+    - Aggregated log visualisation
     - Alerting
     samm2: o-incident-management|A|2
 
