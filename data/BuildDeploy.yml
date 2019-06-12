@@ -92,7 +92,7 @@ Build:
 
 Deployment:
 
-  Defined deployment process:
+  Repeatable deployment process:
     risk: Deployments without a defined process are error prone thus allowing old, untested or artefacts without provenance to be deployed.
     measure: A defined deployment process significantly lowers the risk of security errors during the deployment phase.
     difficultyOfImplementation:
@@ -131,7 +131,7 @@ Deployment:
     implementation: A complete database dabackup might be performed. For large and complex
       environments, a Point in Time Recovery for databases should be implemented.
     dependsOn:
-      - Defined deployment process
+      - Repeatable deployment process
     samm: OE2-A
     samm2: TODO
 

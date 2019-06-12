@@ -1,21 +1,6 @@
 ---
 Static application analysis:
 
-#  Test of middleware components with known vulnerabilities:
-#    risk: Components of the middleware might have vulnerabilities.
-#    measure: Tests for known vulnerabilities in components of the middleware are performed.
-#    difficultyOfImplementation:
-#      knowledge: 1
-#      time: 2
-#      resources: 1
-#    usefulness: 5
-#    level: 1
-#    dependsOn:
-#      - Defined build process
-#    implementation: OWASP Dependency Check
-#    samm: SA
-#    samm2: v-security-testing|A|2
-
   Server-side SCA:
     risk: Source code contains bugs and security vulnerabilities.
     measure: Implementation of static code analysis tools embedded in the SDLC.
@@ -24,7 +9,7 @@ Static application analysis:
       time: 2
       resources: 1
     usefulness: 4
-    level: 2
+    level: 1
     implementation: eslint, FindSecurityBugs, jsprime
     dependsOn:
       - Defined build process
@@ -38,7 +23,7 @@ Static application analysis:
       time: 2
       resources: 1
     usefulness: 4
-    level: 2
+    level: 1
     implementation:
       - eslint
       - FindSecurityBugs
@@ -56,7 +41,7 @@ Static application analysis:
       time: 2
       resources: 1
     usefulness: 2
-    level: 3
+    level: 2
     dependsOn:
       - Defined build process
     implementation:
@@ -122,12 +107,10 @@ Static application analysis:
 
 Dynamic application analysis:
 
-  Simple Scan:
-    risk: Deficient security tests are performed. Simple vulnerabilities are not detected
-      and missing security configurations (e.g. headers) are not set. Fast feedback
-      is not given.
-    measure: A simple scan is performed to get a security baseline. In case the test
-      is done in under 10 minutes, it should be part of the build and deployment process.
+  Web application DCA:
+    risk: Insufficient security tests are performed and simple vulnerabilities are not detected. For example, missing security configurations in the form of HTTP headers might
+      not have been set by Developers. Fast feedback on this ommission is not received.
+    measure: A simple web application scan is performed to get a security baseline. This should be automated into the build and deployment process.
     difficultyOfImplementation:
       knowledge: 2
       time: 3
@@ -135,10 +118,12 @@ Dynamic application analysis:
     usefulness: 2
     level: 1
     dependsOn:
-      - Defined build process
+      - Repeatable build process
+      - Repeatable deploy process
     samm: ST2
     implementation:
       - OWASP Zap
+      - <a href='https://github.com/zaproxy/zap-core-help/wiki/HelpIntro'>The OWASP Zed Attack Proxy (ZAP) Desktop User Guide</a>
       - Arachni
     samm2: v-security-testing|A|1
 
