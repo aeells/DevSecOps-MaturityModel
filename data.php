@@ -14,7 +14,7 @@ $dimensions = array(
     "Culture and Organisation" => readYaml("data/CultureOrganisation.yml"),
     "Infrastructure" => readYaml("data/Infrastructure.yml"),
     "Observability" => readYaml("data/Observability.yml"),
-    "Patch Management" => readYaml("data/PatchManagement.yml"),
+    "Systems Management" => readYaml("data/SystemsManagement.yml"),
     "Test Verification" => readYaml("data/TestVerification.yml"),
 );
 

@@ -1,0 +1,53 @@
+---
+Patching:
+
+  Patch policy:
+    risk: Recognised security flaws for which there are patch fixes released are not addressed in a controlled fashioon.
+    measure: Patch policy for all levels of the system (application, OS, 3rd party dependencies etc) is published and implemented with ability to determine the size of the gap
+      between intent and implementation.
+    difficultyOfImplementation:
+      knowledge: 3
+      time: 1
+      resources: 2
+    usefulness: 4
+    level: 1
+    dependsOn:
+      - Coverage and control metrics
+    samm2: o-environment-management|B|1
+
+  Regular build of images:
+    risk: Vulnerabilities in running containers or images are retained for too long and expose the risk of exploitation.
+    measure: Images and containers are being rebuilt at least nightly.
+    difficultyOfImplementation:
+      knowledge: 3
+      time: 2
+      resources: 2
+    usefulness: 3
+    level: 2
+    dependsOn:
+      - Immutable Infrastructure
+    samm2: o-environment-management|B|1
+
+  Maximum image/container lifetimes:
+    risk: Vulnerabilities in running containers or images are retained for too long and expose the risk of exploitation.
+    measure: The nightly build images are deployed minimum every 30 days.
+    difficultyOfImplementation:
+      knowledge: 3
+      time: 4
+      resources: 2
+    usefulness: 3
+    level: 3
+    samm2: o-environment-management|B|1
+
+  Short maximum image/container lifetimes:
+    risk: Vulnerabilities in running containers or images are retained for too long and expose the risk of exploitation.
+    measure: The nightly build images are deployed minimum daily.
+    difficultyOfImplementation:
+      knowledge: 3
+      time: 4
+      resources: 2
+    usefulness: 3
+    level: 4
+    samm2: o-environment-management|B|1
+
+...
