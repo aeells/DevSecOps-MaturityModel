@@ -1,5 +1,144 @@
 ---
-Dynamic depth for applications:
+Static application analysis:
+
+#  Test of middleware components with known vulnerabilities:
+#    risk: Components of the middleware might have vulnerabilities.
+#    measure: Tests for known vulnerabilities in components of the middleware are performed.
+#    difficultyOfImplementation:
+#      knowledge: 1
+#      time: 2
+#      resources: 1
+#    usefulness: 5
+#    level: 1
+#    dependsOn:
+#      - Defined build process
+#    implementation: OWASP Dependency Check
+#    samm: SA
+#    samm2: v-security-testing|A|2
+
+  Static analysis of server side components:
+    risk: Important parts in the source code of the middleware have vulnerabilities.
+    measure: Usage of static analysis tools for important parts of the middleware
+      are used. Static analysis uses for example string matching algorithms and/or
+      dataflowanalysis.
+    difficultyOfImplementation:
+      knowledge: 2
+      time: 2
+      resources: 1
+    usefulness: 4
+    level: 2
+    implementation: eslint, FindSecurityBugs, jsprime
+    dependsOn:
+      - Defined build process
+    samm2: v-security-testing|A|2
+
+  Static analysis for important client side components:
+    risk: Important parts in the source code of the frontend have vulnerabilities.
+    measure: Usage of static analysis tools for important parts of the frontend are
+      used. Static analysis uses for example string matching algorithms and/or dataflowanalysis.
+    difficultyOfImplementation:
+      knowledge: 2
+      time: 2
+      resources: 1
+    usefulness: 3
+    level: 3
+    implementation:
+      - eslint
+      - FindSecurityBugs
+      - jsprime
+      - <a href='https://github.com/ing-bank/bdd-mobile-security-automation-framework'>bdd-mobile-security-automation-framework</a>
+    samm2: v-security-testing|A|2
+    dependsOn:
+      - Defined build process
+
+  Test of client side components with known vulnerabilities:
+    risk: Client side components might have vulnerabilities.
+    measure: Tests for known vulnerabilities in components of the frontend are performed.
+    difficultyOfImplementation:
+      knowledge: 1
+      time: 2
+      resources: 1
+    usefulness: 2
+    level: 3
+    dependsOn:
+      - Defined build process
+    implementation:
+      - <a href="https://github.com/RetireJS/retire.js/">retire.js</a>
+      - <a href="https://docs.npmjs.com/cli/audit">npm audit</a>
+    samm2: v-security-testing|A|2
+
+  Usage of multiple scanners:
+    risk: Each vulnerability scanner has different opportunities. By using just one
+      scanner, some vulnerabilities might not be found.
+    measure: Usage of multiple static tools to find more vulnerabilities.
+    difficultyOfImplementation:
+      knowledge: 3
+      time: 3
+      resources: 5
+    usefulness: 1
+    level: 3
+    dependsOn:
+      - Usage of different roles
+    samm2: v-security-testing|A|2
+
+  Exclusion of source code duplicates:
+    risk: Duplicates in source code might influence the stability of the application.
+    measure: Automatic Detection and manual removal of duplicates in source code.
+    difficultyOfImplementation:
+      knowledge: 1
+      time: 1
+      resources: 1
+    usefulness: 1
+    level: 4
+    implementation: PMD
+    dependsOn:
+      - Defined build process
+    samm2: v-security-testing|A|2
+
+  Static analysis for all components/libraries:
+    risk: Used components like libraries and legacy applications might have vulnerabilities
+    measure: Usage of a static analysis for all used components.
+    difficultyOfImplementation:
+      knowledge: 2
+      time: 4
+      resources: 2
+    usefulness: 3
+    level: 4
+    dependsOn:
+      - "Static analysis for important client side components"
+      - "Static analysis for important server side components"
+    samm2: v-security-testing|A|2
+
+  Static analysis for all self written components:
+    risk: Parts in the source code of the frontend or middleware have vulnerabilities.
+    measure: Usage of static analysis tools for all parts of the middleware and frontend.
+      Static analysis uses for example string matching algorithms and/or dataflowanalysis.
+    difficultyOfImplementation:
+      knowledge: 2
+      time: 2
+      resources: 1
+    usefulness: 4
+    level: 4
+    implementation: eslint, FindSecurityBugs, jsprime
+    dependsOn:
+      - "Static analysis for important client side components"
+      - "Static analysis for important server side components"
+    samm2: v-security-testing|A|2
+
+  Stylistic analysis:
+    risk: False source code indenting might lead to vulnerabilites.
+    measure: Analysis of compliance to style guides of the source code ensures that
+      source code indenting rules are met.
+    difficultyOfImplementation:
+      knowledge: 1
+      time: 1
+      resources: 1
+    usefulness: 1
+    level: 4
+    implementation: PMD
+    samm2: v-security-testing|A|2
+
+Dynamic application analysis:
 
   Simple Scan:
     risk: Deficient security tests are performed. Simple vulnerabilities are not detected
@@ -139,146 +278,110 @@ Dynamic depth for applications:
     implementation: OWASP Code Pulse
     samm2: v-security-testing|A|2
 
-Static depth for applications:
+Static infrastructure analysis:
 
-  Test of middleware components with known vulnerabilities:
-    risk: Components of the middleware might have vulnerabilities.
-    measure: Tests for known vulnerabilities in components of the middleware are performed.
+  Test cluster deployment resources:
+    risk: The deployment configuration (e.g. kubernetes deployment resources) might contain unsecure configurations.
+    measure: Test the deployment configuration for virtualized environments for unsecure configurations.
     difficultyOfImplementation:
-      knowledge: 1
-      time: 2
-      resources: 1
-    usefulness: 5
-    level: 1
-    dependsOn:
-      - Defined build process
-    implementation: OWASP Dependency Check
-    samm: SA
-    samm2: v-security-testing|A|2
+      knowledge: 2
+      time: 1
+      resources: 2
+    usefulness: 3
+    level: 2
+    implementation:
+      - <a href="https://kubesec.io/">kubesec</a>
+    samm2: v-security-testing|A|1
 
-  Static analysis for important server side components:
-    risk: Important parts in the source code of the middleware have vulnerabilities.
-    measure: Usage of static analysis tools for important parts of the middleware
-      are used. Static analysis uses for example string matching algorithms and/or
-      dataflowanalysis.
+  Test the configuration of cloud environments:
+    risk: Standard hardening practices for cloud environments are not performed leading
+      to vulnerabilities.
+    measure: With the help of tools the configuration of virtual environments are
+      tested.
     difficultyOfImplementation:
       knowledge: 2
       time: 2
       resources: 1
     usefulness: 4
     level: 2
-    implementation: eslint, FindSecurityBugs, jsprime
-    dependsOn:
-      - Defined build process
-    samm2: v-security-testing|A|2
+    implementation:
+      - <a href="https://github.com/aquasecurity/kube-bench">kube-bench</a>
+    samm: EH2-B
+    samm2: v-security-testing|A|1
 
-  Static analysis for important client side components:
-    risk: Important parts in the source code of the frontend have vulnerabilities.
-    measure: Usage of static analysis tools for important parts of the frontend are
-      used. Static analysis uses for example string matching algorithms and/or dataflowanalysis.
+  Test of infrastructure components for known vulnerabilities:
+    risk: " Infrastructure components might have vulnerabilities."
+    measure: "Test for known vulnerabilities in infrastructure components. Often, the only way to respond to known vulnerabilities in operating system packages is to accept the risk and wait for a patch."
     difficultyOfImplementation:
       knowledge: 2
-      time: 2
-      resources: 1
-    usefulness: 3
-    level: 3
-    implementation:
-      - eslint
-      - FindSecurityBugs
-      - jsprime
-      - <a href='https://github.com/ing-bank/bdd-mobile-security-automation-framework'>bdd-mobile-security-automation-framework</a>
-    samm2: v-security-testing|A|2
-    dependsOn:
-      - Defined build process
-
-  Test of client side components with known vulnerabilities:
-    risk: Client side components might have vulnerabilities.
-    measure: Tests for known vulnerabilities in components of the frontend are performed.
-    difficultyOfImplementation:
-      knowledge: 1
-      time: 2
-      resources: 1
+      time: 5
+      resources: 2
     usefulness: 2
     level: 3
-    dependsOn:
-      - Defined build process
     implementation:
-      - <a href="https://github.com/RetireJS/retire.js/">retire.js</a>
-      - <a href="https://docs.npmjs.com/cli/audit">npm audit</a>
-    samm2: v-security-testing|A|2
+      - Anchore
+      - Clair
+      - OpenSCAP
+      - <a href='https://github.com/future-architect/vuls'>Vuls</a>
+    samm2: v-security-testing|A|1
 
-  Usage of multiple scanners:
-    risk: Each vulnerability scanner has different opportunities. By using just one
-      scanner, some vulnerabilities might not be found.
-    measure: Usage of multiple static tools to find more vulnerabilities.
-    difficultyOfImplementation:
-      knowledge: 3
-      time: 3
-      resources: 5
-    usefulness: 1
-    level: 3
-    dependsOn:
-      - Usage of different roles
-    samm2: v-security-testing|A|2
+Dynamic infrastructure analysis:
 
-  Exclusion of source code duplicates:
-    risk: Duplicates in source code might influence the stability of the application.
-    measure: Automatic Detection and manual removal of duplicates in source code.
-    difficultyOfImplementation:
-      knowledge: 1
-      time: 1
-      resources: 1
-    usefulness: 1
-    level: 4
-    implementation: PMD
-    dependsOn:
-    - Defined build process
-    samm2: v-security-testing|A|2
-
-  Static analysis for all components/libraries:
-    risk: Used components like libraries and legacy applications might have vulnerabilities
-    measure: Usage of a static analysis for all used components.
+  Test network segmentation:
+    risk: Wrong or no network segmentation of pods makes it easyer for an attacker to access a database and extract or modify data.
+    measure: Integration of fine granulated network segmenation (also between pods in the same namespace)
     difficultyOfImplementation:
       knowledge: 2
-      time: 4
-      resources: 2
+      time: 2
+      resources: 1
     usefulness: 3
-    level: 4
-    dependsOn:
-    - "Static analysis for important client side components"
-    - "Static analysis for important server side components"
+    level: 1
+    implementation: <a href="https://github.com/controlplaneio/netassert">netassert</a>
+    dependendsOn: Segmentated networks for virtual environments
     samm2: v-security-testing|A|2
 
-  Static analysis for all self written components:
-    risk: Parts in the source code of the frontend or middleware have vulnerabilities.
-    measure: Usage of static analysis tools for all parts of the middleware and frontend.
-      Static analysis uses for example string matching algorithms and/or dataflowanalysis.
+  Test of the configuration of cloud environments:
+    risk: Standard hardening practices for cloud environments are not performed leading to vulnerabilities.
+    measure: With the help of tools the configuration of virtual environments are tested.
     difficultyOfImplementation:
       knowledge: 2
       time: 2
       resources: 1
     usefulness: 4
-    level: 4
-    implementation: eslint, FindSecurityBugs, jsprime
-    dependsOn:
-    - "Static analysis for important client side components"
-    - "Static analysis for important server side components"
-    samm2: v-security-testing|A|2
+    level: 2
+    implementation:
+      - <a href='https://github.com/aquasecurity/kube-hunter'>kube-hunter</a>
+      - openVAS
+    samm: EH2-B
 
-  Stylistic analysis:
-    risk: False source code indenting might lead to vulnerabilites.
-    measure: Analysis of compliance to style guides of the source code ensures that
-      source code indenting rules are met.
+  Weak password test:
+    risk: Weak passwords in components like applications or systems, specially for
+      privileged accounts, lead to take over of that account.
+    measure: Automatic brute force attacks are performed. Specially the usage of standard
+      accounts like 'admin' and employee user-ids is recommended.
     difficultyOfImplementation:
-      knowledge: 1
+      knowledge: 2
       time: 1
       resources: 1
     usefulness: 1
-    level: 4
-    implementation: PMD
+    level: 3
+    implementation: HTC Hydra
     samm2: v-security-testing|A|2
 
-Test-Intensity:
+  Load tests:
+    risk: As it is unknown how many requests the systems and applications can serve,
+      due to an unexpected load the availability is disturbed.
+    measure: Load test against the production system or a production near system is
+      performed.
+    difficultyOfImplementation:
+      knowledge: 3
+      time: 2
+      resources: 5
+    usefulness: 3
+    level: 4
+    samm2: v-security-testing|A|1
+
+Test Intensity:
 
   Default settings for intensity:
     risk: Time pressure and ignorance might lead to false predictions for the test
@@ -533,108 +636,5 @@ Application tests:
     - Defined deployment process
     samm: ST2-B
     samm2: v-security-testing|B|3
-
-Dynamic depth for infrastructure:
-
-  Test network segmentation:
-    risk: Wrong or no network segmentation of pods makes it easyer for an attacker to access a database and extract or modify data.
-    measure: Integration of fine granulated network segmenation (also between pods in the same namespace)
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 2
-      resources: 1
-    usefulness: 3
-    level: 1
-    implementation: <a href="https://github.com/controlplaneio/netassert">netassert</a>
-    dependendsOn: Segmentated networks for virtual environments
-    samm2: v-security-testing|A|2
-
-  Test of the configuration of cloud environments:
-    risk: Standard hardening practices for cloud environments are not performed leading to vulnerabilities.
-    measure: With the help of tools the configuration of virtual environments are tested.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 2
-      resources: 1
-    usefulness: 4
-    level: 2
-    implementation:
-      - <a href='https://github.com/aquasecurity/kube-hunter'>kube-hunter</a>
-      - openVAS
-    samm: EH2-B
-
-  Weak password test:
-    risk: Weak passwords in components like applications or systems, specially for
-      privileged accounts, lead to take over of that account.
-    measure: Automatic brute force attacks are performed. Specially the usage of standard
-      accounts like 'admin' and employee user-ids is recommended.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 1
-      resources: 1
-    usefulness: 1
-    level: 3
-    implementation: HTC Hydra
-    samm2: v-security-testing|A|2
-
-  Load tests:
-    risk: As it is unknown how many requests the systems and applications can serve,
-      due to an unexpected load the availability is disturbed.
-    measure: Load test against the production system or a production near system is
-      performed.
-    difficultyOfImplementation:
-      knowledge: 3
-      time: 2
-      resources: 5
-    usefulness: 3
-    level: 4
-    samm2: v-security-testing|A|1
-
-Static depth for infrastructure:
-
-  Test cluster deployment resources:
-    risk: The deployment configuration (e.g. kubernetes deployment resources) might contain unsecure configurations.
-    measure: Test the deployment configuration for virtualized environments for unsecure configurations.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 1
-      resources: 2
-    usefulness: 3
-    level: 2
-    implementation:
-      - <a href="https://kubesec.io/">kubesec</a>
-    samm2: v-security-testing|A|1
-
-  Test the configuration of cloud environments:
-    risk: Standard hardening practices for cloud environments are not performed leading
-      to vulnerabilities.
-    measure: With the help of tools the configuration of virtual environments are
-      tested.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 2
-      resources: 1
-    usefulness: 4
-    level: 2
-    implementation:
-      - <a href="https://github.com/aquasecurity/kube-bench">kube-bench</a>
-    samm: EH2-B
-    samm2: v-security-testing|A|1
-
-  Test of infrastructure components for known vulnerabilities:
-    risk: " Infrastructure components might have vulnerabilities."
-    measure: "Test for known vulnerabilities in infrastructure components. Often, the only way to respond to known vulnerabilities in operating system packages is to accept the risk and wait for a patch."
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 5
-      resources: 2
-    usefulness: 2
-    level: 3
-    implementation:
-      - Anchore
-      - Clair
-      - OpenSCAP
-      - <a href='https://github.com/future-architect/vuls'>Vuls</a>
-    samm2: v-security-testing|A|1
 
 ...
