@@ -15,7 +15,7 @@ $dimensions = array(
     "Infrastructure" => readYaml("data/Infrastructure.yml"),
     "Observability" => readYaml("data/Observability.yml"),
     "Systems Management" => readYaml("data/SystemsManagement.yml"),
-    "Test Verification" => readYaml("data/TestVerification.yml"),
+    "Testing" => readYaml("data/Testing.yml"),
 );
 
 ksort($dimensions);

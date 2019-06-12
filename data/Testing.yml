@@ -59,7 +59,7 @@ Static application analysis:
     usefulness: 1
     level: 3
     dependsOn:
-      - Usage of different roles
+      - Realistic use of users and roles
     samm2: v-security-testing|A|2
 
   Reduction in duplication of source code:
@@ -127,10 +127,9 @@ Dynamic application analysis:
       - Arachni
     samm2: v-security-testing|A|1
 
-  Usage of different roles:
-    risk: Parts of the service are not covered during the scan, because a login is
-      not performed.
-    measure: Integration of authentication with all roles used in the service.
+  Realistic use of users and roles:
+    risk: Scan does not cover those parts of the system that require a login or privileged/elevated access.
+    measure: Integration of authentication and authorisation with all roles used in the service.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -138,14 +137,12 @@ Dynamic application analysis:
     usefulness: 2
     level: 2
     dependsOn:
-      - Simple Scan
+      - Web application DCA
     samm2: v-security-testing|A|2
 
-  Coverage of client-side dynamic components:
-    risk: Parts of the service are not covered during the scan, because JavaScript
-      is not getting executed. Therefore, the co
-    measure: Usage of a spider which executes dynamic content like JavaScript, e.g.
-      via Selenium.
+  AJAX-rich web application DCA:
+    risk: AJAX-rich parts of a web application might not be invoked with a regular spidering tool.
+    measure: Running an AJAX spider after regular spidering will help give a better map of all application resources in scope.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -153,15 +150,15 @@ Dynamic application analysis:
     usefulness: 4
     level: 2
     dependsOn:
-    - Usage of different roles
+      - Web application DCA
     samm: ST-2
     samm2: v-security-testing|A|2
-    implementation: Ajax Spider
+    implementation:
+      - <a href="https://www.we45.com/blog/7-features-that-make-zap-a-great-tool-for-application-security-testing">Ajax Spider</a>
 
-  Usage of multiple scanners:
-    risk: Each vulnerability scanner has different opportunities. By using just one
-      scanner, some vulnerabilities might not be found.
-    measure: Usage of multiple spiders and scanner enhance the coverage and the vulnerabilities.
+  Multiple DCA scanners:
+    risk: Each vulnerability scanner has different opportunities. Using just one scanner means some vulnerabilities might not be found.
+    measure: Usage of multiple spiders and scanners enhances the coverage, exposing a clearer picture of application vulnerabilities.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -169,31 +166,14 @@ Dynamic application analysis:
     usefulness: 1
     level: 3
     dependsOn:
-      - Usage of different roles
-    implementation: SecureCodeBox
+      - Realistic use of users and roles
+    implementation:
+      - <a href="https://github.com/secureCodeBox/secureCodeBox">SecureCodeBox</a>
     samm2: v-security-testing|A|2
 
-  Coverage of hidden endpoints:
-    risk: Hidden endpoints of the service are not getting tracked.
-    measure: Hidden endpoints are getting detected and included in the vulnerability
-      scan.
-    difficultyOfImplementation:
-      knowledge: 3
-      time: 2
-      resources: 1
-    usefulness: 5
-    level: 3
-    implementation: cURL, OpenAPI
-    dependsOn:
-    - Usage of different roles
-    samm2: v-security-testing|A|2
-
-  Coverage of more input vectors:
-    risk: Parts of the service are not covered. For example specially formatted or
-      coded parameters are not getting detected as parameter (e.g. parameters in REST-like
-      URLs, parameters in JSON-Format or base64-coded parameters).
-    measure: Special parameter and special encodings are defined, so that they get
-      fuzzed by the used vulnerability scanners.
+  Payload targeting:
+    risk: Inject a variety of payloads may force the application into an undesired state, possibly exposing a potential vulnerability.
+    measure: Submission of various invalid or unexpected data to the target system in a test scenario builds confidence.
     difficultyOfImplementation:
       knowledge: 5
       time: 5
@@ -201,14 +181,14 @@ Dynamic application analysis:
     usefulness: 4
     level: 3
     dependsOn:
-    - Usage of different roles
+    - Realistic use of users and roles
+    implementation:
+      - <a href="https://github.com/zaproxy/zap-core-help/wiki/HelpAddonsFuzzConcepts">Fuzzing</a>
     samm2: v-security-testing|A|2
 
-  Coverage of sequential operations:
-    risk: Sequential operations like workflows (e.g. login -> put products in the
-      basked
-    measure: Sequential operations are defined and checked by the vulnerability scanner
-      in the defined order.
+  User journeys / workflows:
+    risk: Scan does not cover all user journeys and application workflows.
+    measure: Recoding of all user journeys and applicatino workflows are defined and checked by the vulnerability scanner.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -217,32 +197,21 @@ Dynamic application analysis:
     level: 3
     implementation: cURL
     dependsOn:
-    - Usage of different roles
+    - Realistic use of users and roles
     samm2: v-security-testing|A|2
 
-  Coverage of service to service communication:
-    risk: Service to service communication is not covered.
-    measure: Service to service communication is dumped and checked.
-    difficultyOfImplementation:
-      knowledge: 4
-      time: 5
-      resources: 2
-    usefulness: 3
-    level: 4
-    dependsOn:
-    - Simple Scan
-    samm2: v-security-testing|A|2
-
-  Coverage analysis:
-    risk: Parts of the service are not still covered.
-    measure: Check that there are no missing paths in the application with coverage-tools.
+  Dynamic code coverage analysis:
+    risk: A continuous challenge facing penetration testers is ensuring adequate coverage of a target application. A purely black box perspective makes it almost impossible to
+      accurately identify how much of the attack surface was tested for penetration during assessment.
+    measure: Use a glass box tool to provides insight into the real-time code coverage of penetration testing activities.
     difficultyOfImplementation:
       knowledge: 4
       time: 5
       resources: 3
     usefulness: 4
     level: 4
-    implementation: OWASP Code Pulse
+    implementation:
+      - <a href="http://code-pulse.com/">OWASP Code Pulse</a>
     samm2: v-security-testing|A|2
 
 Static infrastructure analysis:
