@@ -308,7 +308,7 @@ Test Management:
 
   Vulnerability management system:
     risk: Testing, capturing, documenting, visualising and tracking of security vulernabilities is a complex and time-consuming effort, particularly in large, distributed
-    Enterprise organisations. Efforts should be made to streamline this so that the barrier to managing security concerns is not too high.
+      Enterprise organisations. Efforts should be made to streamline this so that the barrier to managing security concerns is not too high.
     measure: Streamlines the security testing process by offering templating, report generation, metrics, and baseline self-service tools.
     difficultyOfImplementation:
       knowledge: 3
