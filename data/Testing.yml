@@ -216,24 +216,9 @@ Dynamic application analysis:
 
 Static infrastructure analysis:
 
-  Test cluster deployment resources:
-    risk: The deployment configuration (e.g. kubernetes deployment resources) might contain unsecure configurations.
-    measure: Test the deployment configuration for virtualized environments for unsecure configurations.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 1
-      resources: 2
-    usefulness: 3
-    level: 2
-    implementation:
-      - <a href="https://kubesec.io/">kubesec</a>
-    samm2: v-security-testing|A|1
-
-  Test the configuration of cloud environments:
-    risk: Standard hardening practices for cloud environments are not performed leading
-      to vulnerabilities.
-    measure: With the help of tools the configuration of virtual environments are
-      tested.
+  Cloud environment configuration:
+    risk: Standard hardening practices for cloud environments are not performed leading to vulnerabilities.
+    measure: With the help of tools the configuration of virtual environments are security tested.
     difficultyOfImplementation:
       knowledge: 2
       time: 2
@@ -241,13 +226,15 @@ Static infrastructure analysis:
     usefulness: 4
     level: 2
     implementation:
-      - <a href="https://github.com/aquasecurity/kube-bench">kube-bench</a>
-    samm: EH2-B
+      - <a href="https://github.com/aquasecurity/linux-bench">linux-bench</a>
+      - <a href='https://github.com/aquasecurity/kube-hunter'>kube-hunter</a>
+      - <a href='http://www.openvas.org/'>OpenVAS</a>
+  samm: EH2-B
     samm2: v-security-testing|A|1
 
-  Test of infrastructure components for known vulnerabilities:
-    risk: " Infrastructure components might have vulnerabilities."
-    measure: "Test for known vulnerabilities in infrastructure components. Often, the only way to respond to known vulnerabilities in operating system packages is to accept the risk and wait for a patch."
+  Operating system known vulnerabilities:
+    risk: Performing security vulnerability analysis and software updates on a daily basis is a burden to System Administrators.
+    measure: Test automatically and continuously for known OS vulnerabilities.
     difficultyOfImplementation:
       knowledge: 2
       time: 5
@@ -257,58 +244,42 @@ Static infrastructure analysis:
     implementation:
       - Anchore
       - Clair
-      - OpenSCAP
+      - <a href='https://www.open-scap.org/'>OpenSCAP</a>
       - <a href='https://github.com/future-architect/vuls'>Vuls</a>
     samm2: v-security-testing|A|1
 
 Dynamic infrastructure analysis:
 
-  Test network segmentation:
-    risk: Wrong or no network segmentation of pods makes it easyer for an attacker to access a database and extract or modify data.
-    measure: Integration of fine granulated network segmenation (also between pods in the same namespace)
+  Network, firewall, routing, and NACL verification:
+    risk: Incorrect network configurations make it easy for an attacker to access proprietary client and customer data.
+    measure: Test automatically and continuously for correct and best-practice networking configurations.
     difficultyOfImplementation:
       knowledge: 2
       time: 2
       resources: 1
     usefulness: 3
     level: 1
-    implementation: <a href="https://github.com/controlplaneio/netassert">netassert</a>
+    implementation:
+      - <a href="https://github.com/controlplaneio/netassert">netassert</a>
     dependendsOn: Segmentated networks for virtual environments
     samm2: v-security-testing|A|2
 
-  Test of the configuration of cloud environments:
-    risk: Standard hardening practices for cloud environments are not performed leading to vulnerabilities.
-    measure: With the help of tools the configuration of virtual environments are tested.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 2
-      resources: 1
-    usefulness: 4
-    level: 2
-    implementation:
-      - <a href='https://github.com/aquasecurity/kube-hunter'>kube-hunter</a>
-      - openVAS
-    samm: EH2-B
-
-  Weak password test:
-    risk: Weak passwords in components like applications or systems, specially for
-      privileged accounts, lead to take over of that account.
-    measure: Automatic brute force attacks are performed. Specially the usage of standard
-      accounts like 'admin' and employee user-ids is recommended.
+  Weak password scanning:
+    risk: Weak passwords , particularly for privileged accounts, lead to insecure and potentially compromised systems.
+    measure: Automatic brute force attacks are performed. Focusing on standard accounts such as 'admin' and employee ids is recommended.
     difficultyOfImplementation:
       knowledge: 2
       time: 1
       resources: 1
     usefulness: 1
     level: 3
-    implementation: HTC Hydra
+    implementation:
+      - <a href='https://github.com/vanhauser-thc/thc-hydra'>THC Hydra</a>
     samm2: v-security-testing|A|2
 
-  Load tests:
-    risk: As it is unknown how many requests the systems and applications can serve,
-      due to an unexpected load the availability is disturbed.
-    measure: Load test against the production system or a production near system is
-      performed.
+  Load and soak tests:
+    risk: Without regular load and soak tests it is unclear how the system will perform in high load scenarios which could have security implications.
+    measure: Load and soak tests are performed regularly against either the production (the Blue side whilst Green is active) or a production-like system.
     difficultyOfImplementation:
       knowledge: 3
       time: 2

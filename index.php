@@ -1,5 +1,5 @@
 <?php
-$title = gettext("Activities Overview");
+$title = gettext("DevSecOps Maturity Model");
 include_once "head.php";
 ?>
 <body>
@@ -7,10 +7,10 @@ include_once "head.php";
 include_once "data.php";
 include_once "navi.php";
 
-echo "<h1>Matrix</h1>";
+echo "<h1>DevSecOps Maturity Model</h1>";
 echo getTable($dimensions);
 
-echo "<h1>Activtities per Dimension</h1>";
+echo "<h1>Activities per Dimension</h1>";
 echo '<div class="extra">'.getInfos($dimensions) . '</div>';
 ?>
 <script>
