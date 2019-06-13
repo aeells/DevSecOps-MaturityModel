@@ -1,4 +1,51 @@
 ---
+Application tests:
+
+  Security-related unit tests:
+    risk: Most applications contain encryption- or authentication-related proprietary code. Not having high unit test coverage on this code leads to bugs and vulnerabilities.
+      Additionally, not having unit tests leads to brittle and unrefactorable code which leads to even more bugs and vulnerabilities over time.
+    measure: A high degree of unit tests coverage supporting important security-related features such as authentication or encryption.
+    difficultyOfImplementation:
+      knowledge: 3
+      time: 4
+      resources: 2
+    usefulness: 3
+    level: 2
+    implementation:
+      - JUnit
+      - <a href='https://karma-runner.github.io'>Karma</a>
+    samm: ST2-B
+    samm2: v-security-testing|B|3
+
+  Security-related integration tests:
+    risk: System components need to work together for a successful and secure customer experience, for example the application authentication module and a separate
+      Active Directory sytem. If these components are not robustly tested in tandem there is a significant risk of security vulnerabilities being exposed.
+    measure: A high degree of integration tests coverage supporting important security-related features such as authentication or encryption.
+    difficultyOfImplementation:
+      knowledge: 3
+      time: 4
+      resources: 2
+    usefulness: 2
+    level: 3
+    implementation: HttpUnit, Selenium
+    samm: ST2-B
+    samm2: v-security-testing|B|3
+
+  Security-related smoke tests:
+    risk: Deployment errors may occur which lead to non-availablity of the system, a part of the system or a feature. A typical
+    measure: Smoke tests should be performed against all environments, including Production, after each deployment.
+      A typical security-related feature to smoke test for would ensure that customer account login works correctly.
+    difficultyOfImplementation:
+      knowledge: 2
+      time: 2
+      resources: 2
+    usefulness: 2
+    level: 4
+    dependsOn:
+      - Defined deployment process
+    samm: ST2-B
+    samm2: v-security-testing|B|3
+
 Static application analysis:
 
   Server-side SCA:
@@ -320,72 +367,5 @@ Test Management:
       - <a href='https://www.owasp.org/index.php/OWASP_DefectDojo_Project'>OWASP Defect Dojo</a>
       - <a href="https://github.com/secureCodeBox/secureCodeBox">SecureCodeBox</a>
     samm2: i-defect-management|B|1
-
-Application tests:
-
-  Security unit tests for important components:
-    risk: Vulnerabilities are rising due to code changes.
-    measure: Usage of unit tests to test important security related features like
-      authentication and authorization.
-    difficultyOfImplementation:
-      knowledge: 3
-      time: 4
-      resources: 2
-    usefulness: 3
-    level: 2
-    comment: "Die Integration von Modultests findet schon w\xE4hrend der Entwicklung
-      statt, es wird auf Schwachstellen in Sub-Routinen, Funktionen, Module, Bibliotheken
-      usw. gepr\xFCft."
-    implementation:
-      - JUnit
-      - <a href='https://karma-runner.github.io'>Karma</a>
-    samm: ST2-B
-    samm2: v-security-testing|B|3
-
-  Security integration tests for important components:
-    risk: Vulnerabilities are rising due to code changes in a complex microservice
-      environment.
-    measure: Implementation of essential security related integration tests. For example
-      for authentication and authorization.
-    difficultyOfImplementation:
-      knowledge: 3
-      time: 4
-      resources: 2
-    usefulness: 2
-    level: 3
-    implementation: HttpUnit
-    samm: ST2-B
-    samm2: v-security-testing|B|3
-
-  High coverage of security related module and integration tests:
-    risk: Vulnerabilities are rising due to code changes in a complex microservice
-      environment in not important components.
-    measure: Implementation of security related tests via unit tests and integration
-      tests. Including the test of libraries, in case the are not tested already.
-    difficultyOfImplementation:
-      knowledge: 5
-      time: 5
-      resources: 3
-    usefulness: 3
-    level: 4
-    samm: ST2-B
-    samm2: v-security-testing|B|3
-
-  Smoke Test:
-    risk: During a deployment an error might happen which leads to non-availablity
-      of the system, a part of the system or a feature.
-    measure: Integration tests are performed against the production environment after
-      each deployment.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 2
-      resources: 2
-    usefulness: 2
-    level: 4
-    implementation: ""
-    dependsOn:
-    - Defined deployment process
-    samm: ST2-B
-    samm2: v-security-testing|B|3
 
 ...
