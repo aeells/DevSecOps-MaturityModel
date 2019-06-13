@@ -288,128 +288,28 @@ Dynamic infrastructure analysis:
     level: 4
     samm2: v-security-testing|A|1
 
-Consolidation:
+Test Management:
 
-  Definition of quality gates:
-    risk: Improper examination of vulnerabilities leads to no visibility at all.
-    measure: Quality gates for found vulnerabilities are defined. In the start it
-      is important to not overload the security analyst, therefore the recommendation
-      is to start with alerting of high cirital vulnerabilities.
-    difficultyOfImplementation:
-      knowledge: 1
-      time: 1
-      resources: 1
-    usefulness: 4
-    level: 1
-    samm: IR2-A
-    samm2: i-defect-management|A|2
-
-  Simple false positive treatment:
-    risk: As false positive occure during each test, all vulnerabilities might be
-      ignored.
-    measure: False positives are suppressed so they will not show up on the next tests
-      again.
-    difficultyOfImplementation:
-      knowledge: 1
-      time: 1
-      resources: 1
-    usefulness: 4
-    level: 1
-    implementation: Most security tools have the possibility to suppress false positives.
-    samm: IR2-A
-    samm2: i-defect-management|A|2
-
-  Simple visualization of defects:
-    risk: The security level of a component is not visible. Therefore, the motivation
-      to enhance the security is not give.
-    measure: Vulnerabilties are simple visualized.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 2
-      resources: 1
-    usefulness: 3
-    level: 2
-    implementation:
-      - OWASP Dependency Check Jenkins Plugin
-      - LogParser Jenkins Plugins
-      - SecureCodeBox
-    samm2: i-defect-management|B|1
-
-  Integration of vulnerability issues into the development process:
-    risk: To read console output of the build server to search for vulnerabilities
-      might be difficult. Also, to check a vulnerability management system might not
-      be a daily task for a developer.
-    measure: Vulnerabilities are tracked in the teams issue system (e.g. jira).
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 2
-      resources: 1
-    usefulness: 2
-    level: 3
-    implementation: "Bei SAST: Serverseitige/klientenseitige Teams k\xF6nnen einfach
-      erfasst werden. Bei Mikroservice-Architektur k\xF6nnen einzelne Mikroservices
-      i.d.R. Teams zugewiesen werden. Bei DAST: Schwachstellen sind klassifiziert
-      und k\xF6nnen serverseitigen und klientenseitigen Teams zugewiesen werden."
-    samm2: "i-defect-management|B|2"
-
-  Treatment of defects with severity middle:
-    risk: Vulnerabilities with severity middle are not visible.
-    measure: Vulnerabilities with severity middle are added to the quality gate.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 2
-      resources: 1
-    usefulness: 3
-    level: 3
-    comment: False positive analysis, specially for static analysis, is time consuming.
-    samm2: i-defect-management|B|2
-
-  Reproducible defect tickets:
-    risk: Vulnerability descriptions are hard to understand by staff from operations
-      and development.
-    measure: Vulnerabilities include the test procedure to give the staff from operations
-      and development the ability to reproduce vulnerabilities. This enhances the
-      understanding of vulnerabilities and therefore the fix have a higher quality.
+  Reproducible defects:
+    risk: To be fixed, vulnerability and security defects must be reproducible in development and test environments. This means these environments must be similiar in
+      configuration as the Dev/prod parity principle. Without this, fixes are attempting directly in Production which can lead to an escalation of problems.
+    measure: Vulnerabilities include the test procedure to Operations and Development staff the ability to reproduce vulnerabilities in a production-like environment.
     difficultyOfImplementation:
       knowledge: 3
       time: 2
       resources: 2
     usefulness: 2
     level: 4
-    implementation: <a href='https://github.com/mozilla/zest'>Mozilla Zest</a>
+    dependsOn:
+      - Infrastructure as Code
+    implementation:
+      - <a href='https://github.com/mozilla/zest'>Mozilla Zest</a>
     samm2: i-defect-management|B|2
 
-  Treatment of all defects:
-    risk: Vulnerabilities with serverity low are not visible.
-    measure: All vulnerabilities are added to the quality gate.
-    difficultyOfImplementation:
-      knowledge: 3
-      time: 2
-      resources: 1
-    usefulness: 2
-    level: 4
-  samm2: i-defect-management|B|2
-
-  Advanced visualization of defects:
-    risk: Correlation of the vulnerabilities of different tools to have an overview
-      of the the overall security level per component/project/team is not given.
-    measure: Findings are visualized per component/project/team.
-    difficultyOfImplementation:
-      knowledge: 2
-      time: 4
-      resources: 1
-    usefulness: 2
-    level: 4
-    implementation:
-      - OWASP Defect Dojo
-      - SecureCodeBox
-    samm2: i-defect-management|B|1
-
-  Usage of a vulnerability management system:
-    risk: Maintenance of false positives in each tool enforces a high workload. In
-      addition a correlation of the same finding from different tools is not possible.
-    measure: Aggregation of vulnerabilities in one tool reduce the workload to mark
-      false positives.
+  Vulnerability management system:
+    risk: Testing, capturing, documenting, visualising and tracking of security vulernabilities is a complex and time-consuming effort, particularly in large, distributed
+    Enterprise organisations. Efforts should be made to streamline this so that the barrier to managing security concerns is not too high.
+    measure: Streamlines the security testing process by offering templating, report generation, metrics, and baseline self-service tools.
     difficultyOfImplementation:
       knowledge: 3
       time: 3
@@ -417,8 +317,8 @@ Consolidation:
     usefulness: 2
     level: 4
     implementation:
-    - OWASP Defect Dojo
-    - SecureCodeBox
+      - <a href='https://www.owasp.org/index.php/OWASP_DefectDojo_Project'>OWASP Defect Dojo</a>
+      - <a href="https://github.com/secureCodeBox/secureCodeBox">SecureCodeBox</a>
     samm2: i-defect-management|B|1
 
 Application tests:
