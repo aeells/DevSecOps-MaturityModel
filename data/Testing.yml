@@ -229,7 +229,7 @@ Static infrastructure analysis:
       - <a href="https://github.com/aquasecurity/linux-bench">linux-bench</a>
       - <a href='https://github.com/aquasecurity/kube-hunter'>kube-hunter</a>
       - <a href='http://www.openvas.org/'>OpenVAS</a>
-  samm: EH2-B
+    samm: EH2-B
     samm2: v-security-testing|A|1
 
   Operating system known vulnerabilities:
