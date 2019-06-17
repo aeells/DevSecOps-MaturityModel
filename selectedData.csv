@@ -2,3 +2,7 @@
 "Environment depending configuration parameters"
 "Repeatable build process"
 "Simple Scan"
+"Repeatable deployment process"
+"Build only once"
+"Role-based access controls"
+"3rd party library SCA"
