@@ -1,5 +1,5 @@
 ---
-Application tests:
+Application security:
 
   Security-related unit tests:
     risk: Most applications contain encryption- or authentication-related proprietary code. Not having high unit test coverage on this code leads to bugs and vulnerabilities.
@@ -46,7 +46,7 @@ Application tests:
     samm: ST2-B
     samm2: v-security-testing|B|3
 
-Static application analysis:
+SAST:
 
   Server-side SCA:
     risk: Source code contains bugs and security vulnerabilities.
@@ -152,7 +152,7 @@ Static application analysis:
     implementation: PMD, Checkstyle
     samm2: v-security-testing|A|2
 
-Dynamic application analysis:
+DAST:
 
   Web application DCA:
     risk: Insufficient security tests are performed and simple vulnerabilities are not detected. For example, missing security configurations in the form of HTTP headers might
@@ -261,7 +261,7 @@ Dynamic application analysis:
       - <a href="http://code-pulse.com/">OWASP Code Pulse</a>
     samm2: v-security-testing|A|2
 
-Infrastructure analysis:
+Infra security:
 
   Network, firewall, routing, and NACL verification:
     risk: Incorrect network configurations make it easy for an attacker to access proprietary client and customer data.

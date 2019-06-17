@@ -5,7 +5,7 @@ function loadDiagramm() {
         $.each(data, function (leveli, subdimension) {
             $.each(subdimension, function (dimensionName, level) {
                 $.each(level, function (subdimensionName, data) {
-                    labels.push(replaceSubdimensionName(subdimensionName));
+                    labels.push(subdimensionName);
                     if (data['selected'] == 0) {
                         values.push(0);
                     } else {
@@ -14,12 +14,11 @@ function loadDiagramm() {
                 });
             });
         });
-        var countSubdimensions = 16;
+        var countSubdimensions = 15;
         var chart = circularHeatChart()
             .segmentHeight(50)
             .innerRadius(190)
             .numSegments(countSubdimensions)
-            .radialLabels(["Maturity 1", "Maturity 2", "Maturity 3", "Maturity 4"])
             .segmentLabels(labels)
             .range(["white", "green"])
 
@@ -31,7 +30,4 @@ function loadDiagramm() {
             .call(chart);
     });
     $('html,body').scrollTop(0);
-}
-function replaceSubdimensionName(name) {
-    return name.replace("for applications", "app").replace("Hardening", "Hard.").replace("Guidance", "Guid.").replace("for infrastructure", "infra")
 }

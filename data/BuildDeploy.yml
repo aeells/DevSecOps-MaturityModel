@@ -90,7 +90,7 @@ Build:
     implementation: Docker
     samm2: i-secure-build|A|2
 
-Deployment:
+Deploy:
 
   Repeatable deployment process:
     risk: Deployments without a defined process are error prone thus allowing old, untested or artefacts without provenance to be deployed.

@@ -1,5 +1,5 @@
 ---
-Education and Guidance:
+Education:
 
   Ad hoc security consulting:
     risk: Not asking a security expert when questions regarding security appear might lead to flaws. Not even being aware of security concerns in the first place will lead to security risks.
@@ -187,7 +187,7 @@ Process:
   Business continuity and disaster recovery practices:
     risk: In case of an emergency, like a power outage, DR actions to perform are not clear. This leads to reaction and remediation delays.
     measure: By understanding and documenting a business continuity and disaster recovery (BCDR) plan, the overall availabilitiy of systems and applications is increased.
-    Success factors like responsibilties, Service Level Agreemenmts, Recovery Point Objectives, Recovery Time Objectives or Failover must be fully documented and practiced.
+      Success factors like responsibilties, Service Level Agreemenmts, Recovery Point Objectives, Recovery Time Objectives or Failover must be fully documented and practiced.
     difficultyOfImplementation:
       knowledge: 4
       time: 3

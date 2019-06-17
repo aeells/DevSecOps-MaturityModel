@@ -1,5 +1,4 @@
 <?php
-$title = "Identification of the degree of the implementation";
 include_once "head.php";
 ?>
 <body>
