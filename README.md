@@ -1,5 +1,9 @@
 ## DevSecOps Maturity Model
 
+#### Kudos
+
+All the kudos to [Timo Pagel](https://github.com/wurstbrot) for the initial fork of this [project](https://github.com/wurstbrot/DevSecOps-MaturityModel).
+
 #### Build
     > git clone https://github.com/aeells/devsecops-maturity-model.git
     > cd devsecops-maturity-model
@@ -7,6 +11,16 @@
 
 #### Run
     > ./start.bash
+
+Launch a browser to view the docker container serving PHP on [localhost](http://localhost:81).
+
+![Matrix view](./screenshots/Matrix.png)
+
+The model is stateful and implemented Security aspects can be captured on the Implementation Levels view. 
+
+![Implementation view](./screenshots/Implementation.png)
+
+Remaining views (tabs) are still under assessment for level of benefit.
 
 #### Useful References
 
