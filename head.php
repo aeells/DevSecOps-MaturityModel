@@ -63,10 +63,10 @@ function getTableHeader() {
 	$headers = array (
 			gettext ( "Dimension" ),
 			gettext ( "Sub-Dimension" ),
-			gettext ( "Basic understanding" ),
-			gettext ( "Evolving understanding" ),
-			gettext ( "High understanding" ),
-			gettext ( "Advanced understanding at scale" )
+			gettext ( "Foundation Security level" ),
+			gettext ( "Intermediate Security level" ),
+			gettext ( "High Security level" ),
+			gettext ( "Advanced Security level" )
 	);
 	$headerContent = "<thead  class=\"thead-default\"><tr>";
 	foreach ( $headers as $header ) {
