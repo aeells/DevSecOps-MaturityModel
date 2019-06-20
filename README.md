@@ -2,19 +2,23 @@
 
 #### Kudos
 
-All the kudos to [Timo Pagel](https://github.com/wurstbrot) for the initial fork of this [project](https://github.com/wurstbrot/DevSecOps-MaturityModel).
+All the kudos to JavaScript and PHP ninja [Timo Pagel](https://github.com/wurstbrot) for the initial fork of this [project](https://github.com/wurstbrot/DevSecOps-MaturityModel).
 
 #### Build
-    > git clone https://github.com/aeells/devsecops-maturity-model.git
-    > cd devsecops-maturity-model
     > ./build.bash
+The Docker image only needs to built once. 
 
 #### Run
     > ./start.bash
+The Docker image mounts the `/content` dir straight to `/var/www/html` and serves the `index.php` file from there.
 
-Launch a browser to view the docker container serving PHP on [localhost](http://localhost:81).
+This means the content is served in-situ with no need to rebuild or restart Docker; simply refresh the browser after making changes.
+
+Launch a browser to view the Docker container serving the `content/index.php` file on [localhost:81](http://localhost:81).
 
 ![Matrix view](./screenshots/Matrix.png)
+
+Useful implementation hints (tools, products, additional references) are available in the drill-down views (still a work in progress).
 
 The model is stateful and implemented Security aspects can be captured on the Implementation Levels view. 
 

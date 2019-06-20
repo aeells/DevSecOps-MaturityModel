@@ -21,16 +21,15 @@
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
 	crossorigin="anonymous"></script>
 
-<link href="assets/css/common.css" rel="stylesheet">
-<link href="assets/css/nv.d3.css" rel="stylesheet">
+<link href="css/common.css" rel="stylesheet">
+<link href="css/nv.d3.css" rel="stylesheet">
 
-<script src="assets/js/bootstrap.min.js"></script>
-<script src="assets/js/d3.v3.js"></script>
-<script src="assets/js/nv.d3.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/d3.v3.js"></script>
+<script src="js/nv.d3.js"></script>
 
     <!--https://yandex.st/highlightjs/7.3/styles/default.min.css-->
-<link rel="stylesheet"
-	href="assets/css/default.min.css">
+<link rel="stylesheet" href="css/default.min.css">
 <link rel="stylesheet" href="spiderweb.css">
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
