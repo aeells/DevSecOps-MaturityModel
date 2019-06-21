@@ -1,4 +1,3 @@
 #!/bin/bash
-docker build -t dsomm:latest .
-docker rm -f dsomm || true
-
+docker build -t devsecops-model:latest .
+docker rm -f devsecops-model || true
